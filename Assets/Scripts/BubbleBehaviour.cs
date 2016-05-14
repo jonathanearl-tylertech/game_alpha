@@ -4,7 +4,7 @@ using System.Collections;
 public class BubbleBehaviour : MonoBehaviour {
 	public float sinAmp = 0.5f;
 	public float sinOsc = 15f;
-	public static float bubbleSpeed = 3f;
+	public static float bubbleSpeed = 1f;
 	public Vector3 initpos;
 	public bool hasMeemo = false;
 	public bool isPopped;

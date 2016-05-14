@@ -5,10 +5,11 @@ public class Hero_Interaction : MonoBehaviour {
 	private Canvas gameOverCanvas;
 	CameraBehavior globalBehavior;
 
-    public float max_speed = 2f;
+    public float max_speed = 40f;
     public float air_speed = 0.1f;
     private Rigidbody2D rigid_body;
 	public Vector3 mSize;
+	private float move_speed = 0f;
 
 	#region healthbar support
 	private const int MAX_HEALTH = 3;
@@ -45,6 +46,8 @@ public class Hero_Interaction : MonoBehaviour {
 		Hurt
 	}
 	public MeemoState current_state;
+	private float hurt_timer = 0f;
+	private const float MAX_HURT_TIME = 0.5f;
 	#endregion
 
 	// Use this for initialization
@@ -62,8 +65,12 @@ public class Hero_Interaction : MonoBehaviour {
     }
 
     void FixedUpdate () {
-		this.change_direction ();
 		/// Interaction with bubble
+		/// 
+		if (this.move_speed != 0f) {
+//			this.rigid_body.AddForce (new Vector2 (move_speed, 0f), ForceMode2D.Force);
+			this.rigid_body.velocity = new Vector3(move_speed, rigid_body.velocity.y, 0f);
+		}
 		if (is_using_power) {
 			fly ();
 		}
@@ -73,6 +80,8 @@ public class Hero_Interaction : MonoBehaviour {
     }
 
 	void Update() {
+		this.grounded = Physics2D.OverlapCircle (this.ground_check.position, this.ground_radius, this.what_is_ground);
+		this.move_speed = 0f;
 		if (Input.GetKey ("space") && !this.grounded && this.star_timer > 0f) {
 			is_using_power = true;
 		}
@@ -86,15 +95,24 @@ public class Hero_Interaction : MonoBehaviour {
 				} else { // When meemo is following bubble
 					this.follow_in_bubble ();
 				}
+				this.change_direction ();
 				break;
 			case MeemoState.Normal:
-				this.grounded = Physics2D.OverlapCircle (this.ground_check.position, this.ground_radius, this.what_is_ground);
-				this.rigid_body.velocity = new Vector2 (Input.GetAxis ("Horizontal") * max_speed, this.rigid_body.velocity.y);
+				this.move_speed = Input.GetAxis ("Horizontal") * max_speed;
+				this.change_direction ();
 				break;
+			case MeemoState.Hurt:
+				this.hurt_timer += Time.deltaTime;
+				if (this.hurt_timer > MAX_HURT_TIME) {
+					this.current_state = MeemoState.Normal;
+					this.hurt_timer = 0f;
+				}
+				break;
+				
 		}
 	}
 		
-	// Currently unused
+// Currently unused
 //    void Jump ()
 //    {
 //        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10f), ForceMode2D.Impulse);
@@ -102,7 +120,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#region starpower support
 	void fly () {
 		this.star_timer -= Time.fixedDeltaTime;
-		this.rigid_body.AddForce (new Vector2 (5f, 20f), ForceMode2D.Force);
+		this.rigid_body.AddForce (new Vector2 (0f, 20f), ForceMode2D.Force);
 		star_bar.UpdateStarBarSize (this.star_timer);
 	}
 
@@ -128,11 +146,7 @@ public class Hero_Interaction : MonoBehaviour {
 
 	#region bubble support
 	// Update position of bubble following sine curve
-	private void FollowSineCurve(){
-		float newY = bubble.transform.position.y + BubbleBehaviour.bubbleSpeed * Time.deltaTime;
-		float newX = bubble.initpos.x + GetXValue (newY); 
-		bubble.transform.position = new Vector3 (newX, newY, 0f);
-	}
+
 		
 	// Calculate the x value for bubble movement
 	private float GetXValue(float y){
@@ -144,12 +158,18 @@ public class Hero_Interaction : MonoBehaviour {
 
 	#region Bubble support
 	private void move_in_bubble() {
-		float bnewY = bubble.transform.position.y + 0.03f;// bubble floats
-		float bnewX = transform.position.x + Input.GetAxis ("Horizontal") * (air_speed);
+		float bnewY = bubble.transform.position.y + BubbleBehaviour.bubbleSpeed * Time.deltaTime;// bubble floats
+		float bnewX = transform.position.x + Input.GetAxis ("Horizontal") * BubbleBehaviour.bubbleSpeed * Time.deltaTime;
 		bubble.transform.position = new Vector3 (bnewX, bnewY, 0f);
 		bubble.initpos.x = bnewX;
 
 		transform.position = new Vector3 (bnewX, bnewY - 0.2f, transform.position.z);
+	}
+
+	private void FollowSineCurve(){
+		float newY = bubble.transform.position.y + BubbleBehaviour.bubbleSpeed * Time.deltaTime;
+		float newX = bubble.initpos.x + GetXValue (newY); 
+		bubble.transform.position = new Vector3 (newX, newY, 0f);
 	}
 
 	private void follow_in_bubble() {
