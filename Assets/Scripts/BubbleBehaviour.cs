@@ -92,7 +92,7 @@ public class BubbleBehaviour : MonoBehaviour {
 
 
 	void PopBubble() {
-		Debug.Log ("Bubble is popping");
+		//Debug.Log ("Bubble is popping");
 		if (hasMeemo) {
 			thisMeemo.isInBubble = false;
 			thisMeemo.current_state = Hero_Interaction.MeemoState.Normal;
