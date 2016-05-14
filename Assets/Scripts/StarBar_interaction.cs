@@ -21,7 +21,6 @@ public class StarBar_interaction : MonoBehaviour {
 
 	// deterimine position and size relative to the camera of the starbar
 	public void UpdateStarBarInCamera() {
-
 		float cam_height = Camera.main.orthographicSize;
 		float cam_width = cam_height * Camera.main.aspect;
 		// get width of bar and height of bar
@@ -32,7 +31,6 @@ public class StarBar_interaction : MonoBehaviour {
 		float y = main_camera.transform.position.y + cam_height - height;
 		max_width_relative_to_cam = cam_width * PERCENT_OF_CAMERA_WIDTH;
 		float x_offset = (1f - this.bar_ratio) * max_width_relative_to_cam / 2f;
-		Debug.Log ("x_offset:" + x_offset + " x:" + x);
 		this.transform.position = new Vector3 (x - x_offset, y, 0f);
 		this.transform.localScale = new Vector3 (width, height, 0f);
 	}

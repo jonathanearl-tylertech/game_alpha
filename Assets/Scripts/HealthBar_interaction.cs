@@ -32,6 +32,10 @@ public class HealthBar_interaction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
+
+	public void UpdatePosition() {
 		float x = Camera.main.transform.position.x - Camera.main.orthographicSize * Camera.main.aspect;
 		x += heart.transform.localScale.x;
 		float y = Camera.main.transform.position.y + Camera.main.orthographicSize;
@@ -41,7 +45,6 @@ public class HealthBar_interaction : MonoBehaviour {
 		for (int i = 0; i < MAX_HEALTH; i++) {
 			Hearts[i].transform.position = new Vector3(x + heart.transform.localScale.x * i, y, 0f);
 		}
-
 		UpdateHealthBar ();
 	}
 

@@ -28,8 +28,10 @@ public class CameraBehavior: MonoBehaviour {
     //public GameObject mZoomRef = null;
     public Camera mCamera = null;
 
+	#region UI support
 	private StarBar_interaction star_bar = null;
-
+	private HealthBar_interaction health_bar = null;
+	#endregion
     // Use this for initialization
     void Start () {
 		/*
@@ -42,8 +44,6 @@ public class CameraBehavior: MonoBehaviour {
 		target = GameObject.Find("Meemo").transform;
 		cam = GameObject.Find ("Main Camera").transform;
 
-			
-
         // World bound support
         mWorldBound = new Bounds(Vector3.zero, Vector3.one);
         UpdateWorldWindowBound();
@@ -54,8 +54,8 @@ public class CameraBehavior: MonoBehaviour {
 		cameraMaxy = globalyMax - mCamera.orthographicSize;
 
 		this.star_bar = GameObject.Find ("StarBar").GetComponent<StarBar_interaction> ();
+		this.health_bar = GameObject.Find ("HealthBar").GetComponent<HealthBar_interaction> ();
     }
-
 
 	void LateUpdate(){
 		if(GameObject.Find("Meemo") != null)
@@ -63,13 +63,11 @@ public class CameraBehavior: MonoBehaviour {
 
 		// limits the hero from moving backwards
 		cameraMinx = cam.position.x;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
 		this.star_bar.UpdateStarBarInCamera ();
-    }
+		this.health_bar.UpdatePosition ();
+	}
+
+	void update() {}
 
     #region Game Window World size bound support
     public enum WorldBoundStatus
@@ -110,7 +108,6 @@ public class CameraBehavior: MonoBehaviour {
 		globalxMax = backgroundSize.x - (mCamera.orthographicSize * mCamera.aspect);
 		globalyMax = backgroundSize.y / 2f;
 		globalyMin = -backgroundSize.y / 2f;
-		Debug.Log (globalxMin + " " + globalxMax + " " + globalyMin + " " + globalyMax);
     }
 
     public Vector2 WorldCenter { get { return mWorldCenter; } }
