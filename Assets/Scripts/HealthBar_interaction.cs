@@ -3,14 +3,17 @@ using System.Collections;
 
 public class HealthBar_interaction : MonoBehaviour {
 
-	const int MAX_HEALTH = 3;
-	GameObject[] Hearts;	// array used to hold the hearts
+	public const int MAX_HEALTH = 3;
+	public GameObject[] Hearts;	// array used to hold the hearts
+	public int curNumOfHearts;
 	CameraBehavior main_camera;
 	GameObject heart;
+
 	// Use this for initialization
 	void Start () {
 		Hearts = new GameObject[MAX_HEALTH];
 		heart = Resources.Load ("Prefabs/Heart") as GameObject;
+		curNumOfHearts = 3;
 
 		this.main_camera = GameObject.Find ("Main Camera").GetComponent<CameraBehavior> ();
 		 
@@ -37,6 +40,17 @@ public class HealthBar_interaction : MonoBehaviour {
 		this.transform.position = new Vector3 (x, y, 0f);
 		for (int i = 0; i < MAX_HEALTH; i++) {
 			Hearts[i].transform.position = new Vector3(x + heart.transform.localScale.x * i, y, 0f);
+		}
+
+		UpdateHealthBar ();
+	}
+
+	void UpdateHealthBar() {
+		for (int i = 0; i < curNumOfHearts; i++) {
+			Hearts[i].GetComponent<Renderer> ().enabled = true;
+		}
+		for (int i = curNumOfHearts; i < MAX_HEALTH; i++) {
+			Hearts[i].GetComponent<Renderer> ().enabled = false;
 		}
 	}
 }

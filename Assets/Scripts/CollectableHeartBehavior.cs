@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CollectableHeartBehavior : MonoBehaviour {
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -13,11 +14,15 @@ public class CollectableHeartBehavior : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter2D(Collision2D other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Player")
 		{
 			// Code
+			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
+			if(healthBar.curNumOfHearts < 3)
+				healthBar.curNumOfHearts++;
+
 			Debug.Log("Meemo touches heart");
 			Destroy (this.gameObject);
 		}

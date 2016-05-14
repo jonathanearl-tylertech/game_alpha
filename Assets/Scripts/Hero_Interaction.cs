@@ -81,7 +81,7 @@ public class Hero_Interaction : MonoBehaviour {
 				
 
 				Debug.Log("MOVING IN BUBBLE");
-				float bnewY = bubble.transform.position.y + 0.01f;// bubble floats
+				float bnewY = bubble.transform.position.y + 0.03f;// bubble floats
 				float bnewX = transform.position.x + Input.GetAxis ("Horizontal") * (air_speed);
 				bubble.transform.position = new Vector3 (bnewX, bnewY, 0f);
 				bubble.initpos.x = bnewX;

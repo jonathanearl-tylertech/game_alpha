@@ -33,6 +33,10 @@ public class TentacleColliderInteraction : MonoBehaviour {
 			ps.Play ();
 			this.play_animation = true;
 			this.current_time_passed = 0f;
+
+			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
+			if(healthBar.curNumOfHearts > 0)
+				healthBar.curNumOfHearts--;
 		}
 	}
 }
