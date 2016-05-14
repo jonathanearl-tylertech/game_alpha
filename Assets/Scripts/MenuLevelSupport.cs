@@ -10,7 +10,6 @@ public class MenuLevelSupport : MonoBehaviour {
 	public Button mMenu;
 	public Button mRestart;
 
-
 	// Use this for initialization
 	void Start () {
 		// Workflow assume:

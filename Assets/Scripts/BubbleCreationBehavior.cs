@@ -18,14 +18,10 @@ public class BubbleCreationBehavior : MonoBehaviour {
 		globalBehaviour = GameObject.Find ("Main Camera").GetComponent<CameraBehavior> ();
 	}
 
-
-
 	// Update is called once per frame
 	void Update () {
 		CreateBubble ();
 	}
-
-
 
 	// Create bubble
 	private void CreateBubble() {

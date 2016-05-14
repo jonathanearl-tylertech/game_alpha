@@ -26,12 +26,8 @@ public class BubbleBehaviour : MonoBehaviour {
 		isPopped = false;
 	}
 
-
-
-
 	// Update is called once per frame
 	void Update () {
-
 		if(!hasMeemo)
 			FollowSineCurve ();
 
@@ -49,16 +45,13 @@ public class BubbleBehaviour : MonoBehaviour {
 			}
 		}
 
-
 		// When bottom of bubble touches world bound, destroy it
 		if ((transform.position.y - size.y / 2f) > globalBehavior.globalyMax) {
 			Debug.Log ("bubble is destroyed");
 			Destroy (this.gameObject);
 		}
 	}
-
-
-
+		
 
 	// Update position of bubble following sine curve
 	public void FollowSineCurve(){
@@ -68,15 +61,11 @@ public class BubbleBehaviour : MonoBehaviour {
 	}
 
 
-
-
 	// Calculate the x value for bubble movement
 	private float GetXValue(float y){
 		float sinFreqScale = sinOsc * 2f * (Mathf.PI) / globalBehavior.globalxMax;
 		return sinAmp * (Mathf.Sin(y * sinFreqScale));
 	}
-
-
 
 
 	// When bubble touches other game objects
@@ -86,7 +75,7 @@ public class BubbleBehaviour : MonoBehaviour {
 		if (other.gameObject.name == "Meemo" && !meemo.isInBubble && !isPopped) {
 			Debug.Log ("Touches Meemo");
 			thisMeemo = other.GetComponent<Hero_Interaction> ();
-
+			thisMeemo.current_state = Hero_Interaction.MeemoState.Bubble;
 			hasMeemo = true;
 			thisMeemo.GetComponent<Rigidbody2D> ().isKinematic = true;
 			thisMeemo.bubble = this;
@@ -105,6 +94,7 @@ public class BubbleBehaviour : MonoBehaviour {
 		Debug.Log ("Bubble is popping");
 		if (hasMeemo) {
 			thisMeemo.isInBubble = false;
+			thisMeemo.current_state = Hero_Interaction.MeemoState.Normal;
 			thisMeemo.GetComponent<Rigidbody2D> ().isKinematic = false;
 			hasMeemo = false;
 		}
