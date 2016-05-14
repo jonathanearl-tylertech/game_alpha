@@ -4,6 +4,7 @@ using System.Collections;
 public class BubbleBehaviour : MonoBehaviour {
 	public float sinAmp = 0.5f;
 	public float sinOsc = 15f;
+	private float bubbleSpeed = 3f;
 	public Vector3 initpos;
 	public bool hasMeemo = false;
 	public bool isPopped;
@@ -55,7 +56,7 @@ public class BubbleBehaviour : MonoBehaviour {
 
 	// Update position of bubble following sine curve
 	public void FollowSineCurve(){
-		float newY = transform.position.y + 0.03f;
+		float newY = transform.position.y + bubbleSpeed * Time.deltaTime;
 		float newX = initpos.x + GetXValue (newY); 
 		transform.position = new Vector3 (newX, newY, 0f);
 	}
