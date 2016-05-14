@@ -43,4 +43,16 @@ public class SquidBehaviour : MonoBehaviour {
 	private void MoveDown(){
 		transform.position = new Vector3(transform.position.x, transform.position.y - 0.015f, transform.position.z);
 	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "Player")
+		{
+			Debug.Log("Meemo touches Squid");
+
+			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
+			if(healthBar.curNumOfHearts > 0)
+				healthBar.curNumOfHearts--;
+		}
+	}
 }
