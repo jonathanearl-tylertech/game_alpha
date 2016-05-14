@@ -32,6 +32,12 @@ public class HealthBar_interaction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Canvas gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
+		if (curNumOfHearts == 0 && !gameOverCanvas.enabled) {
+			Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
+			meemo.Die ();
+		}
+
 		float x = Camera.main.transform.position.x - Camera.main.orthographicSize * Camera.main.aspect;
 		x += heart.transform.localScale.x;
 		float y = Camera.main.transform.position.y + Camera.main.orthographicSize;
