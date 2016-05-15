@@ -10,29 +10,29 @@ public class Angler_interaction : MonoBehaviour {
 	private float distFromMeemoToActivateTrigger = 5f;
 
 	#region state support
-	public enum AngularState
+	public enum AnglarState
 	{
 		Stationary,
 		Moving
 	}
-	public AngularState currentState;
+	public AnglarState currentState;
 	#endregion
 
 
 	// Use this for initialization
 	void Start () {
 		speed = 0f;
-		currentState = AngularState.Stationary;
+		currentState = AnglarState.Stationary;
 	}
 
 
 	// Update is called once per frame
 	void Update () {
 		Canvas gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
-		if (currentState == AngularState.Stationary && !gameOverCanvas.enabled) {
+		if (currentState == AnglarState.Stationary && !gameOverCanvas.enabled) {
 			Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
 			if (Vector3.Distance (meemo.transform.position, transform.position) < distFromMeemoToActivateTrigger) {
-				currentState = AngularState.Moving;
+				currentState = AnglarState.Moving;
 				transform.localScale = new Vector3 (transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
 			}
 		} else {
