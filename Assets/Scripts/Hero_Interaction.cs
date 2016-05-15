@@ -67,7 +67,7 @@ public class Hero_Interaction : MonoBehaviour {
     void FixedUpdate () {
 		/// Interaction with bubble
 		/// 
-		if (this.move_speed != 0f) {
+		if (Mathf.Abs(this.move_speed) > 0.01f) {
 //			this.rigid_body.AddForce (new Vector2 (move_speed, 0f), ForceMode2D.Force);
 			this.rigid_body.velocity = new Vector3(move_speed, rigid_body.velocity.y, 0f);
 		}
@@ -82,7 +82,7 @@ public class Hero_Interaction : MonoBehaviour {
 	void Update() {
 		this.grounded = Physics2D.OverlapCircle (this.ground_check.position, this.ground_radius, this.what_is_ground);
 		this.move_speed = 0f;
-		if (Input.GetKey ("space") && !this.grounded && this.star_timer > 0f) {
+		if (Input.GetKey ("space") && this.star_timer > 0f) {
 			is_using_power = true;
 		}
 		else {

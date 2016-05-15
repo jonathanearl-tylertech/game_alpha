@@ -18,18 +18,18 @@ public class Angler_interaction : MonoBehaviour {
 	public AngularState currentState;
 	#endregion
 
-
+	Hero_Interaction meemo;
 	// Use this for initialization
 	void Start () {
 		speed = 0f;
 		currentState = AngularState.Stationary;
+		meemo = GameObject.Find ("Meemo").GetComponent<Hero_Interaction> ();
 	}
 
 
 	// Update is called once per frame
 	void Update () {
 		if (currentState == AngularState.Stationary) {
-			Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
 			if (Vector3.Distance (meemo.transform.position, transform.position) < distFromMeemoToActivateTrigger) {
 				currentState = AngularState.Moving;
 				transform.localScale = new Vector3 (transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);

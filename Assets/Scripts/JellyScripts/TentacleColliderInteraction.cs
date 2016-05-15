@@ -23,9 +23,8 @@ public class TentacleColliderInteraction : MonoBehaviour {
 			this.play_animation = false;
 		}
 	}
-
-	void OnCollisionEnter2D(Collision2D other)
-	{
+		
+	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "Player")
 		{
 			// Code to handle electricity and bouncing out
@@ -35,4 +34,5 @@ public class TentacleColliderInteraction : MonoBehaviour {
 			this.current_time_passed = 0f;
 		}
 	}
+
 }
