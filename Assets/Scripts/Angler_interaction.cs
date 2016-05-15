@@ -29,7 +29,9 @@ public class Angler_interaction : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (currentState == AngularState.Stationary) {
+		Canvas gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
+		if (currentState == AngularState.Stationary && !gameOverCanvas.enabled) {
+			Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
 			if (Vector3.Distance (meemo.transform.position, transform.position) < distFromMeemoToActivateTrigger) {
 				currentState = AngularState.Moving;
 				transform.localScale = new Vector3 (transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);

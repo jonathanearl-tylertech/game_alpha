@@ -189,15 +189,8 @@ public class Hero_Interaction : MonoBehaviour {
 		pos.x = Mathf.Clamp (pos.x, 0.03f, 1f - (mSize.x / backgroundSize.x)); //(1f / backgroundSize.x * mSize.x / 2f));
 		pos.y = Mathf.Clamp (pos.y, 0.035f, 1f - (mSize.y / backgroundSize.y));
 		transform.position = globalBehavior.mCamera.ViewportToWorldPoint (pos);
-		if (transform.position.y - mSize.y/2f <= globalBehavior.globalyMin)
-		{
-			// Destroy Meemo
-			// TimeScale = 0;
-			// Panel is active
-			Destroy (GameObject.Find("Meemo"));
-			Time.timeScale = 0;
-			gameOverCanvas.enabled = true;
-		}
+
+		CheckDeath ();
 	}
 
 	private void CheckDeath() {
@@ -210,7 +203,7 @@ public class Hero_Interaction : MonoBehaviour {
 		}
 	}
 
-	private void Die() {
+	public void Die() {
 		Destroy (GameObject.Find("Meemo"));
 		Time.timeScale = 0;
 		gameOverCanvas.enabled = true;
