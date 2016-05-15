@@ -13,7 +13,7 @@ public class BubbleCreationBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (null == bubble)
-			bubble = Resources.Load ("Prefabs/Bubble") as GameObject;
+			bubble = Resources.Load ("Prefabs/InteractiveObjects/Bubble") as GameObject;
 
 		globalBehaviour = GameObject.Find ("Main Camera").GetComponent<CameraBehavior> ();
 	}

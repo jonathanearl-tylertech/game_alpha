@@ -26,3 +26,7 @@ ExportedObj/
 sysinfo.txt
 
 Assets/Scripts/HealthBar_interaction.cs
+
+Assets/Scripts/Angler_interaction.cs
+
+Assets/Jump.unity
