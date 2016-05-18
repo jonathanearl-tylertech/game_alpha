@@ -5,9 +5,9 @@ public class Hero_Interaction : MonoBehaviour {
 	private Canvas gameOverCanvas;
 	CameraBehavior globalBehavior;
 
-    public float max_speed = 40f;
-    public float air_speed = 0.1f;
-    private Rigidbody2D rigid_body;
+	public float max_speed = 40f;
+	public float air_speed = 0.1f;
+	private Rigidbody2D rigid_body;
 	public Vector3 mSize;
 	private float move_speed = 0f;
 
@@ -18,10 +18,10 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region jump support
-    bool grounded = false;
-    public Transform ground_check;
-    float ground_radius = 0.3f;
-    public LayerMask what_is_ground;
+	bool grounded = false;
+	public Transform ground_check;
+	float ground_radius = 0.3f;
+	public LayerMask what_is_ground;
 	#endregion
 
 	#region bubble support
@@ -43,7 +43,8 @@ public class Hero_Interaction : MonoBehaviour {
 	{
 		Normal,
 		Bubble,
-		Hurt
+		Hurt,
+		Invincible
 	}
 	public MeemoState current_state;
 	private float hurt_timer = 0f;
@@ -55,7 +56,7 @@ public class Hero_Interaction : MonoBehaviour {
 		this.globalBehavior = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
 		mSize = GetComponent<Renderer> ().bounds.size;
 		this.health_bar = GameObject.Find ("HealthBar").GetComponent<HealthBar_interaction> ();
-        this.rigid_body = this.GetComponent<Rigidbody2D>();
+		this.rigid_body = this.GetComponent<Rigidbody2D>();
 		isInBubble = false;
 		isFacingRight = true;
 		this.star_bar = GameObject.Find ("StarBar").GetComponent<StarBar_interaction> ();
@@ -63,13 +64,13 @@ public class Hero_Interaction : MonoBehaviour {
 		this.PowerAnimation = GameObject.Find("PowerParticle").GetComponent<ParticleSystem> ();
 		gameOverCanvas.enabled = false;		// The GameOverCanvas has to be initially enabled on the Unity UI
 		current_state = MeemoState.Normal;
-    }
+	}
 
-    void FixedUpdate () {
+	void FixedUpdate () {
 		/// Interaction with bubble
 		/// 
 		if (Mathf.Abs(this.move_speed) > 0.01f) {
-//			this.rigid_body.AddForce (new Vector2 (move_speed, 0f), ForceMode2D.Force);
+			//			this.rigid_body.AddForce (new Vector2 (move_speed, 0f), ForceMode2D.Force);
 			this.rigid_body.velocity = new Vector3(move_speed, rigid_body.velocity.y, 0f);
 		}
 		if (is_using_power) {
@@ -78,7 +79,7 @@ public class Hero_Interaction : MonoBehaviour {
 		this.ClampToCamera ();
 		this.CheckDeath ();
 		/// End interaction with bubble
-    }
+	}
 
 	void Update() {
 		this.grounded = Physics2D.OverlapCircle (this.ground_check.position, this.ground_radius, this.what_is_ground);
@@ -93,34 +94,41 @@ public class Hero_Interaction : MonoBehaviour {
 			this.PowerAnimation.Clear ();
 		}
 		switch (this.current_state) {
-			case MeemoState.Bubble:
-				if (Input.GetAxis ("Horizontal") != 0f) { // When meemo is controlling the horizontal direction
-					this.move_in_bubble ();
-				} else { // When meemo is following bubble
-					this.follow_in_bubble ();
-				}
-				this.change_direction ();
-				break;
-			case MeemoState.Normal:
-				this.move_speed = Input.GetAxis ("Horizontal") * max_speed;
-				this.change_direction ();
-				break;
-			case MeemoState.Hurt:
-				this.hurt_timer += Time.deltaTime;
-				if (this.hurt_timer > MAX_HURT_TIME) {
-					this.current_state = MeemoState.Normal;
-					this.hurt_timer = 0f;
-				}
-				break;
+		case MeemoState.Bubble:
+			if (Input.GetAxis ("Horizontal") != 0f) { // When meemo is controlling the horizontal direction
+				this.move_in_bubble ();
+			} else { // When meemo is following bubble
+				this.follow_in_bubble ();
+			}
+			this.change_direction ();
+			break;
+		case MeemoState.Normal:
+			this.move_speed = Input.GetAxis ("Horizontal") * max_speed;
+			this.change_direction ();
+			break;
+		case MeemoState.Hurt:
+			if (this.health_bar.curNumOfHearts > 0)
+				this.health_bar.curNumOfHearts--;
+			if (this.health_bar.curNumOfHearts == 0)
+				this.Die ();
+			else
+				this.current_state = MeemoState.Invincible;
+			break;
+		case MeemoState.Invincible:
+			this.hurt_timer += Time.deltaTime;
+			if (this.hurt_timer > MAX_HURT_TIME) {
+				this.current_state = MeemoState.Normal;
+				this.hurt_timer = 0f;
+			}
+			break;
 		}
-			
 	}
-		
-// Currently unused
-//    void Jump ()
-//    {
-//        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10f), ForceMode2D.Impulse);
-//    }
+
+	// Currently unused
+	//    void Jump ()
+	//    {
+	//        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10f), ForceMode2D.Impulse);
+	//    }
 	#region starpower support
 	void fly () {
 		this.star_timer -= Time.fixedDeltaTime;
@@ -201,7 +209,9 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	public void Die() {
-		Time.timeScale = 0;
+		this.rigid_body.isKinematic = true;
+		this.GetComponent<SpriteRenderer> ().enabled = false;
+		this.current_state = MeemoState.Normal;
 		gameOverCanvas.enabled = true;
 	}
 	#endregion
