@@ -143,10 +143,7 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 	#endregion
 
-	#region bubble support
-	// Update position of bubble following sine curve
-
-		
+	#region bubble support		
 	// Calculate the x value for bubble movement
 	private float GetXValue(float y){
 		float sinFreqScale = BubbleBehaviour.sinOsc * 2f * (Mathf.PI) / globalBehavior.globalxMax;
@@ -199,7 +196,6 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	public void Die() {
-		Destroy (GameObject.Find("Meemo"));
 		Time.timeScale = 0;
 		gameOverCanvas.enabled = true;
 	}
