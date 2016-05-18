@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PufferBehavior : MonoBehaviour {
-	private float distFromMeemoToActivateTrigger = 10f;
+	private float distFromMeemoToActivateTrigger = 7.0f;
 	private float timer = 0.0f;
 	private const float MAX_TIME = 5.0f;
 	public Animator anim;
