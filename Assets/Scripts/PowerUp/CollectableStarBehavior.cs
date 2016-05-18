@@ -19,7 +19,6 @@ public class CollectableStarBehavior : MonoBehaviour {
 		{
 			// Code
 			other.gameObject.GetComponent<Hero_Interaction>().ResetStarPower();
-			Debug.Log("Meemo touches star");
 			Destroy (this.gameObject);
 		}
 	}

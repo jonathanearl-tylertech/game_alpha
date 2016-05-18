@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class BubbleBehaviour : MonoBehaviour {
-	public float sinAmp = 0.5f;
-	public float sinOsc = 15f;
-	public static float bubbleSpeed = 1f;
+	public static float sinAmp = 0.5f;
+	public static float sinOsc = 15f;
+	public static float bubbleSpeed = 3f;
 	public Vector3 initpos;
 	public bool hasMeemo = false;
 	public bool isPopped;
@@ -14,22 +14,20 @@ public class BubbleBehaviour : MonoBehaviour {
 	public float timePassed = 0f;
 
 	private Hero_Interaction thisMeemo;
-
 	private CameraBehavior globalBehavior;
 
 	// Use this for initialization
 	void Start () {
 		globalBehavior = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
-
+		thisMeemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
 		initpos = transform.position;
-
 		anim = GetComponent<Animator> ();
 		isPopped = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if(!hasMeemo)
+		if(!hasMeemo) 
 			FollowSineCurve ();
 
 		Vector3 size = GetComponent<Renderer> ().bounds.size;
@@ -48,7 +46,6 @@ public class BubbleBehaviour : MonoBehaviour {
 
 		// When bottom of bubble touches world bound, destroy it
 		if ((transform.position.y - size.y / 2f) > globalBehavior.globalyMax) {
-			Debug.Log ("bubble is destroyed");
 			Destroy (this.gameObject);
 		}
 	}
@@ -72,10 +69,7 @@ public class BubbleBehaviour : MonoBehaviour {
 	// When bubble touches other game objects
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
-		if (other.gameObject.name == "Meemo" && !meemo.isInBubble && !isPopped) {
-			Debug.Log ("Touches Meemo");
-			thisMeemo = other.GetComponent<Hero_Interaction> ();
+		if (other.gameObject.name == "Meemo" && !thisMeemo.isInBubble && !isPopped) {
 			thisMeemo.current_state = Hero_Interaction.MeemoState.Bubble;
 			hasMeemo = true;
 			thisMeemo.GetComponent<Rigidbody2D> ().isKinematic = true;
@@ -89,8 +83,7 @@ public class BubbleBehaviour : MonoBehaviour {
 			PopBubble ();
 		}
 	}
-
-
+		
 	void PopBubble() {
 		//Debug.Log ("Bubble is popping");
 		if (hasMeemo) {

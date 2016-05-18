@@ -25,7 +25,6 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region bubble support
-	private float meemoSpeed = 5f;
 	public BubbleBehaviour bubble;
 	public bool isInBubble;
 	private bool isFacingRight;
@@ -150,13 +149,10 @@ public class Hero_Interaction : MonoBehaviour {
 		
 	// Calculate the x value for bubble movement
 	private float GetXValue(float y){
-		CameraBehavior globalBehaviour = GameObject.Find ("Main Camera").GetComponent<CameraBehavior> ();
-		float sinFreqScale = bubble.sinOsc * 2f * (Mathf.PI) / globalBehaviour.WorldMax.y;
-		return bubble.sinAmp * (Mathf.Sin(y * sinFreqScale));
+		float sinFreqScale = BubbleBehaviour.sinOsc * 2f * (Mathf.PI) / globalBehavior.globalxMax;
+		return BubbleBehaviour.sinAmp * (Mathf.Sin(y * sinFreqScale));
 	}
-	#endregion
 
-	#region Bubble support
 	private void move_in_bubble() {
 		float bnewY = bubble.transform.position.y + BubbleBehaviour.bubbleSpeed * Time.deltaTime;// bubble floats
 		float bnewX = transform.position.x + Input.GetAxis ("Horizontal") * BubbleBehaviour.bubbleSpeed * Time.deltaTime;
@@ -183,7 +179,6 @@ public class Hero_Interaction : MonoBehaviour {
 	#region camera support
 	private void ClampToCamera() {
 		// Handle when hero collided with the bottom bound of the window (die)
-		CameraBehavior.WorldBoundStatus status = globalBehavior.ObjectCollideWorldBound (GetComponent<Renderer> ().bounds);
 		Vector3 pos = globalBehavior.mCamera.WorldToViewportPoint (transform.position);
 		Vector3 backgroundSize = GameObject.Find ("backgroundImage").GetComponent<Renderer> ().bounds.size;
 		pos.x = Mathf.Clamp (pos.x, 0.03f, 1f - (mSize.x / backgroundSize.x)); //(1f / backgroundSize.x * mSize.x / 2f));
