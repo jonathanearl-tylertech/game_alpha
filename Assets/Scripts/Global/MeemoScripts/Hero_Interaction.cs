@@ -10,6 +10,7 @@ public class Hero_Interaction : MonoBehaviour {
     private Rigidbody2D rigid_body;
 	public Vector3 mSize;
 	private float move_speed = 0f;
+	//private Animator anim;
 
 	#region healthbar support
 	private const int MAX_HEALTH = 3;
@@ -61,6 +62,7 @@ public class Hero_Interaction : MonoBehaviour {
 		gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
 		gameOverCanvas.enabled = false;		// The GameOverCanvas has to be initially enabled on the Unity UI
 		current_state = MeemoState.Normal;
+		//anim = GetComponent<Animator> ();
     }
 
     void FixedUpdate () {
@@ -107,8 +109,12 @@ public class Hero_Interaction : MonoBehaviour {
 					this.hurt_timer = 0f;
 				}
 				break;
-				
 		}
+
+		//if (Input.GetKeyDown ("n")) {
+		//	anim.SetTrigger("squishMeemo");
+		//}
+
 	}
 		
 // Currently unused
