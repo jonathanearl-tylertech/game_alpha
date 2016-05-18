@@ -6,6 +6,7 @@ public class PufferBehavior : MonoBehaviour {
 	private float timer = 0.0f;
 	private const float MAX_TIME = 5.0f;
 	public Animator anim;
+	public float bounce_force = 5f;
 
 	#region state support
 	public enum PufferState
@@ -50,5 +51,7 @@ public class PufferBehavior : MonoBehaviour {
 				break;
 			}
 		}
+
+
 	}
 }
