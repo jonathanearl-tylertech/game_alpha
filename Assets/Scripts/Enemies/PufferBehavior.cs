@@ -36,7 +36,6 @@ public class PufferBehavior : MonoBehaviour {
 				}
 				break;
 			case PufferState.Puffed:
-				Debug.Log (timer);
 				if (Vector3.Distance (meemo.transform.position, transform.position) < distFromMeemoToActivateTrigger) {
 					timer = 0.0f;
 				} else {

@@ -18,7 +18,6 @@ public class LoadSceneSupport : MonoBehaviour {
         // add in listener
         mStart.onClick.AddListener(
                 () => {                     // Lamda operator: define an annoymous function
-				if(Time.timeScale == 0) Time.timeScale = 1;
                 LoadScene("Jump");
                 });
         mExit.onClick.AddListener(
@@ -29,8 +28,6 @@ public class LoadSceneSupport : MonoBehaviour {
 	}
 
 	public void gotoMainMenu(){
-		if (Time.timeScale == 0)
-			Time.timeScale = 1;
 		LoadScene ("Menu");
 	}
 
