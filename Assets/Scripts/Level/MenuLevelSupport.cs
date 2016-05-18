@@ -17,12 +17,10 @@ public class MenuLevelSupport : MonoBehaviour {
 		// add in listener
 		mRestart.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
-				if(Time.timeScale == 0) Time.timeScale = 1;
 				LoadScene("Jump");
 			});
 		mMenu.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
-				if(Time.timeScale == 0) Time.timeScale = 1;
 				LoadScene("Menu");
 			});
 

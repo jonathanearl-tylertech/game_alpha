@@ -17,7 +17,7 @@ public class OnTriggerHurtSupport : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			// stop movement of meemo
 			Rigidbody2D meemo_rigid = other.gameObject.GetComponent<Rigidbody2D> ();
-			meemo_rigid.velocity = new Vector2 (0f, 0f);
+			meemo_rigid.velocity = Vector3.zero;
 			// set to hurt state
 			other.gameObject.GetComponent<Hero_Interaction> ().current_state = Hero_Interaction.MeemoState.Hurt;
 			// get direction to push meemo
@@ -28,10 +28,6 @@ public class OnTriggerHurtSupport : MonoBehaviour {
 				direction = -1;
 			// push meeemo
 			other.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (direction * 5f, 0f), ForceMode2D.Impulse);
-			// adjust health bar
-			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
-			if (healthBar.curNumOfHearts > 0)
-				healthBar.curNumOfHearts--;
 		}	
 	}
 }

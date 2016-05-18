@@ -79,7 +79,7 @@ public class BubbleBehaviour : MonoBehaviour {
 		}
 
 		// Bubble pops when touches jellyfish or squid
-		if (other.gameObject.tag == "jelly" || other.gameObject.tag == "squid") {
+		if (other.gameObject.tag == "Enemy") {
 			PopBubble ();
 		}
 	}

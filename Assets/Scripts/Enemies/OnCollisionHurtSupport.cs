@@ -24,14 +24,10 @@ public class OnCollisionHurtSupport : MonoBehaviour {
 			other.gameObject.GetComponent<Hero_Interaction> ().current_state = Hero_Interaction.MeemoState.Hurt;
 			// get direction to push meemo
 			float direction;
-			if (other.gameObject.transform.position.x > this.transform.position.x) direction = 1;
-			else direction = -1;
+			if (other.gameObject.transform.position.x > this.transform.position.x) direction = 1f;
+			else direction = -1f;
 			// push meeemo
 			other.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (direction * 5f, 0f), ForceMode2D.Impulse);
-			// adjust health bar
-			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
-			if(healthBar.curNumOfHearts > 0)
-				healthBar.curNumOfHearts--;
 		}
 	}
 }
