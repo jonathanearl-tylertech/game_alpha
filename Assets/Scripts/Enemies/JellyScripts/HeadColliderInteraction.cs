@@ -15,18 +15,11 @@ public class HeadColliderInteraction : MonoBehaviour {
 	void Update () {
 	
 	}
-
-
+		
 	void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "Player")
 		{
-			//play meemo getting squished animation
-			Animator meemoAnim = other.gameObject.GetComponent<Animator>();
-			meemoAnim.SetTrigger ("squishMeemo");
-
-			anim.SetTrigger ("trigger");
-
 			Rigidbody2D hero_rigid = other.gameObject.GetComponent<Rigidbody2D>();
 			hero_rigid.velocity = new Vector3(hero_rigid.velocity.x, 0f, 0f);
 			// choose up or down bounce
@@ -34,8 +27,6 @@ public class HeadColliderInteraction : MonoBehaviour {
 			if (other.gameObject.transform.position.y > this.transform.position.y) direction = 1;
 			else direction = -1;
 			hero_rigid.AddForce(new Vector3(hero_rigid.velocity.x, direction * bounce_force, 0), ForceMode2D.Impulse);
-
-
 		}
 	}
 }

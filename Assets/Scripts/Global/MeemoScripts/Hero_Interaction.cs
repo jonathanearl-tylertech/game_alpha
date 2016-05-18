@@ -43,8 +43,7 @@ public class Hero_Interaction : MonoBehaviour {
 	{
 		Normal,
 		Bubble,
-		Hurt,
-		Invincible
+		Hurt
 	}
 	public MeemoState current_state;
 	private float hurt_timer = 0f;
@@ -94,34 +93,27 @@ public class Hero_Interaction : MonoBehaviour {
 			this.PowerAnimation.Clear ();
 		}
 		switch (this.current_state) {
-		case MeemoState.Bubble:
-			if (Input.GetAxis ("Horizontal") != 0f) { // When meemo is controlling the horizontal direction
-				this.move_in_bubble ();
-			} else { // When meemo is following bubble
-				this.follow_in_bubble ();
-			}
-			this.change_direction ();
-			break;
-		case MeemoState.Normal:
-			this.move_speed = Input.GetAxis ("Horizontal") * max_speed;
-			this.change_direction ();
-			break;
-		case MeemoState.Hurt:
-			if (this.health_bar.curNumOfHearts > 0)
-				this.health_bar.curNumOfHearts--;
-			if (this.health_bar.curNumOfHearts == 0)
-				this.Die ();
-			else
-				this.current_state = MeemoState.Invincible;
-			break;
-		case MeemoState.Invincible:
-			this.hurt_timer += Time.deltaTime;
-			if (this.hurt_timer > MAX_HURT_TIME) {
-				this.current_state = MeemoState.Normal;
-				this.hurt_timer = 0f;
-			}
-			break;
+			case MeemoState.Bubble:
+				if (Input.GetAxis ("Horizontal") != 0f) { // When meemo is controlling the horizontal direction
+					this.move_in_bubble ();
+				} else { // When meemo is following bubble
+					this.follow_in_bubble ();
+				}
+				this.change_direction ();
+				break;
+			case MeemoState.Normal:
+				this.move_speed = Input.GetAxis ("Horizontal") * max_speed;
+				this.change_direction ();
+				break;
+			case MeemoState.Hurt:
+				this.hurt_timer += Time.deltaTime;
+				if (this.hurt_timer > MAX_HURT_TIME) {
+					this.current_state = MeemoState.Normal;
+					this.hurt_timer = 0f;
+				}
+				break;
 		}
+			
 	}
 		
 // Currently unused
@@ -209,9 +201,7 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	public void Die() {
-		this.rigid_body.isKinematic = true;
-		this.GetComponent<SpriteRenderer> ().enabled = false;
-		this.current_state = MeemoState.Normal;
+		Time.timeScale = 0;
 		gameOverCanvas.enabled = true;
 	}
 	#endregion
