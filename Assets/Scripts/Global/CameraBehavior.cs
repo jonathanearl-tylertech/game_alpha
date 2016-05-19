@@ -40,7 +40,7 @@ public class CameraBehavior: MonoBehaviour {
 		globalxMin = 0f;
 		globalyMax = 9.8f;
 		globalyMin = -9.9f;*/
-		Screen.SetResolution(960, 640, true);
+		//Screen.SetResolution(960, 640, true);
 
         mCamera = GetComponent<Camera>();
 		target = GameObject.Find("Meemo").transform;
