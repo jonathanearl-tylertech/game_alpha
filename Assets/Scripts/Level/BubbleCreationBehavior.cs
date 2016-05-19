@@ -29,7 +29,7 @@ public class BubbleCreationBehavior : MonoBehaviour {
 			GameObject e = (GameObject) Instantiate(bubble);
 			Vector3 bSize = e.GetComponent<Renderer> ().bounds.size; // get size of bubble
 			e.GetComponent<Renderer>().transform.position = new Vector3(Random.Range(transform.position.x - 2f,transform.position.x + 2f),
-				globalBehaviour.WorldMin.y - bSize.y / 2f, 0f);
+				transform.position.y - bSize.y / 2f, 0f);
 			preBubbleTime = Time.realtimeSinceStartup;
 		}
 	}

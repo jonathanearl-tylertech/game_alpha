@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraBehavior: MonoBehaviour {
 
+	private const float BUFFER = 10f;
     #region World Bound support
     private Bounds mWorldBound;  // this is the world bound
     private Vector2 mWorldMin;  // Better support 2D interactions
@@ -105,10 +106,11 @@ public class CameraBehavior: MonoBehaviour {
         mWorldMin = new Vector2(mWorldBound.min.x, mWorldBound.min.y);
         mWorldMax = new Vector2(mWorldBound.max.x, mWorldBound.max.y);
 
-		globalxMin = -mCamera.orthographicSize * mCamera.aspect;
-		globalxMax = backgroundSize.x - (mCamera.orthographicSize * mCamera.aspect);
-		globalyMax = backgroundSize.y / 2f;
-		globalyMin = -backgroundSize.y / 2f;
+		//initialize global bounds including buffers
+		globalxMin = -mCamera.orthographicSize * mCamera.aspect + BUFFER;
+		globalxMax = backgroundSize.x - (mCamera.orthographicSize * mCamera.aspect) - BUFFER;
+		globalyMax = backgroundSize.y / 2f - 2*BUFFER;
+		globalyMin = -backgroundSize.y / 2f + BUFFER;
     }
 
     public Vector2 WorldCenter { get { return mWorldCenter; } }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HealthBar_interaction : MonoBehaviour {
 
-	public const int MAX_HEALTH = 3;
+	public const int MAX_HEALTH = 5;
 	public GameObject[] Hearts;	// array used to hold the hearts
 	public int curNumOfHearts;
 	CameraBehavior main_camera;
@@ -13,7 +13,7 @@ public class HealthBar_interaction : MonoBehaviour {
 	void Start () {
 		Hearts = new GameObject[MAX_HEALTH];
 		heart = Resources.Load ("Prefabs/Heart") as GameObject;
-		curNumOfHearts = 3;
+		curNumOfHearts = MAX_HEALTH;
 
 		this.main_camera = GameObject.Find ("Main Camera").GetComponent<CameraBehavior> ();
 		 

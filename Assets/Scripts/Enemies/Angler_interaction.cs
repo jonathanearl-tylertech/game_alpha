@@ -36,7 +36,7 @@ public class Angler_interaction : MonoBehaviour {
 				transform.localScale = new Vector3 (transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
 			}
 		} else {
-			speed = 1f;
+			speed = 2f;
 
 			current_distance_traveled += speed * Time.deltaTime;
 			if (current_distance_traveled < max_distance_to_travel) {
