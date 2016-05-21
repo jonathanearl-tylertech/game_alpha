@@ -20,7 +20,7 @@ public class CollectableHeartBehavior : MonoBehaviour {
 		{
 			// Code
 			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
-			if(healthBar.curNumOfHearts < 3)
+			if(healthBar.curNumOfHearts < Hero_Interaction.MAX_HEALTH)
 				healthBar.curNumOfHearts++;
 
 			Debug.Log("Meemo touches heart");

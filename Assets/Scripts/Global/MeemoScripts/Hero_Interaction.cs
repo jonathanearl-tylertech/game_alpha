@@ -12,7 +12,7 @@ public class Hero_Interaction : MonoBehaviour {
 	private float move_speed = 0f;
 
 	#region healthbar support
-	private const int MAX_HEALTH = 3;
+	public static int MAX_HEALTH = 5;
 	public int health = MAX_HEALTH;
 	HealthBar_interaction health_bar;
 	#endregion
