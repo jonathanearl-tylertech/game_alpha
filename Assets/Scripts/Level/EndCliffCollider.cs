@@ -7,7 +7,7 @@ public class EndCliffCollider : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
+		winningPanel.SetActive (false);
     }
 
     // Update is called once per frame
