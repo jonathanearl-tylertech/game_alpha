@@ -16,10 +16,10 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region movespeed support
-	private float max_speed = 8f;
+	private float max_speed = 7f;
 	private float move_speed = 0f;
 	private float move_timer;
-	private float duration = 0.3f;
+	private float duration = 0.7f;
 	#endregion
 
 	#region jump support
@@ -38,7 +38,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#region starpower support
 	public static float MAX_STAR_TIMER = 4f; // get 1 second of power up
 	public static float START_STAR_TIMER_RATIO = 0f/4f;
-	private const float STAR_POWER_LEVEL = 30f;
+	private const float STAR_POWER_LEVEL = 40f;
 	private float star_timer = 0f; 
 	private StarBar_interaction star_bar = null;
 	private bool is_using_power = false;
