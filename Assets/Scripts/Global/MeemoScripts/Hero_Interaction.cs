@@ -58,6 +58,10 @@ public class Hero_Interaction : MonoBehaviour {
 	private const float MAX_HURT_TIME = 0.5f;
 	#endregion
 
+	#region sound support
+	private AudioSource[] sounds;
+	#endregion
+
 	// Use this for initialization
 	void Start () {
 		this.globalBehavior = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
@@ -75,6 +79,10 @@ public class Hero_Interaction : MonoBehaviour {
 		current_state = MeemoState.Normal;
 		#region movespeed support
 		this.move_timer = Time.deltaTime;
+		#endregion
+
+		#region sound support
+		sounds = GetComponents<AudioSource>();
 		#endregion
 
 	}
@@ -240,23 +248,31 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 	#endregion
 
-	/*
-	#region collider support
+
+	#region sound support
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Player")
+		if (other.gameObject.tag == "heart")
 		{
-			// Code
 			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
+			CollectableHeartBehavior heart = other.GetComponent<CollectableHeartBehavior> ();
 			if (healthBar.curNumOfHearts < Hero_Interaction.MAX_HEALTH) {
 				healthBar.curNumOfHearts++;
-				collectingSound.Play ();
 			}
-
+			sounds [0].Play ();
 			Debug.Log("Meemo touches heart");
-			Destroy (this.gameObject);
+			Destroy (heart.gameObject);
+		}
+
+		if (other.gameObject.tag == "star")
+		{
+			CollectableStarBehavior star = other.GetComponent<CollectableStarBehavior> ();
+			sounds [1].Play ();
+			Debug.Log("Meemo touches star");
+			ResetStarPower ();
+			Destroy (star.gameObject);
 		}
 	}
 	#endregion
-	*/
+
 }

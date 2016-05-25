@@ -12,14 +12,4 @@ public class CollectableStarBehavior : MonoBehaviour {
 	void Update () {
 	
 	}
-
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.gameObject.tag == "Player")
-		{
-			// Code
-			other.gameObject.GetComponent<Hero_Interaction>().ResetStarPower();
-			Destroy (this.gameObject);
-		}
-	}
 }
