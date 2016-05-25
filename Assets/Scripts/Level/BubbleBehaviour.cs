@@ -9,6 +9,7 @@ public class BubbleBehaviour : MonoBehaviour {
 	public bool hasMeemo = false;
 	public bool isPopped;
 	public Animator anim;
+	private AudioSource poppingSound;
 
 	public float lastingTime = 1f;
 	public float timePassed = 0f;
@@ -22,6 +23,7 @@ public class BubbleBehaviour : MonoBehaviour {
 		thisMeemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
 		initpos = transform.position;
 		anim = GetComponent<Animator> ();
+		poppingSound = GetComponent<AudioSource> ();
 		isPopped = false;
 	}
 
@@ -87,6 +89,7 @@ public class BubbleBehaviour : MonoBehaviour {
 	void PopBubble() {
 		//Debug.Log ("Bubble is popping");
 		if (hasMeemo) {
+			poppingSound.Play ();
 			thisMeemo.isInBubble = false;
 			thisMeemo.current_state = Hero_Interaction.MeemoState.Normal;
 			thisMeemo.GetComponent<Rigidbody2D> ().isKinematic = false;

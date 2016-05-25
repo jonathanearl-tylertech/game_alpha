@@ -239,4 +239,22 @@ public class Hero_Interaction : MonoBehaviour {
 		gameOverCanvas.enabled = true;
 	}
 	#endregion
+
+	#region collider support
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.tag == "Player")
+		{
+			// Code
+			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
+			if (healthBar.curNumOfHearts < Hero_Interaction.MAX_HEALTH) {
+				healthBar.curNumOfHearts++;
+				collectingSound.Play ();
+			}
+
+			Debug.Log("Meemo touches heart");
+			Destroy (this.gameObject);
+		}
+	}
+	#endregion
 }
