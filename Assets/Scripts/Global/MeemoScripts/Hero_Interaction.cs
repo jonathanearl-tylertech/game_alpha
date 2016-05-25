@@ -38,11 +38,13 @@ public class Hero_Interaction : MonoBehaviour {
 	#region starpower support
 	public static float MAX_STAR_TIMER = 4f; // get 1 second of power up
 	public static float START_STAR_TIMER_RATIO = 0f/4f;
-	private const float STAR_POWER_LEVEL = 40f;
+	private const float STAR_POWER_LEVEL = 45f;
 	private float star_timer = 0f; 
 	private StarBar_interaction star_bar = null;
 	private bool is_using_power = false;
 	private ParticleSystem PowerAnimation;
+	private ParticleSystem damage_particle;
+	private Vector3 damage_point;
 	#endregion
 
 	#region meemostate support
@@ -51,7 +53,8 @@ public class Hero_Interaction : MonoBehaviour {
 		Normal,
 		Bubble,
 		Hurt,
-		Invincible
+		Invincible,
+		Dead
 	}
 	public MeemoState current_state;
 	private float hurt_timer = 0f;
@@ -60,6 +63,7 @@ public class Hero_Interaction : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		this.damage_point = Vector3.zero;
 		this.globalBehavior = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
 		mSize = GetComponent<Renderer> ().bounds.size;
 		this.health_bar = GameObject.Find ("HealthBar").GetComponent<HealthBar_interaction> ();
@@ -76,7 +80,7 @@ public class Hero_Interaction : MonoBehaviour {
 		#region movespeed support
 		this.move_timer = Time.deltaTime;
 		#endregion
-
+		damage_particle = GameObject.Find ("PainParticle").GetComponent<ParticleSystem> ();
 	}
 
 	void FixedUpdate () {
@@ -120,6 +124,9 @@ public class Hero_Interaction : MonoBehaviour {
 			this.change_direction ();
 			break;
 		case MeemoState.Hurt:
+			damage_point = this.transform.position;
+			damage_particle.transform.position = damage_point;
+			damage_particle.Emit(30);
 			if (this.health_bar.curNumOfHearts > 0)
 				this.health_bar.curNumOfHearts--;
 			if (this.health_bar.curNumOfHearts == 0)
@@ -135,6 +142,8 @@ public class Hero_Interaction : MonoBehaviour {
 			}
 			break;
 		}
+		// make sure damage particles stay in correct position
+		damage_particle.transform.position = damage_point;
 	}
 
 	// Currently unused
@@ -177,6 +186,7 @@ public class Hero_Interaction : MonoBehaviour {
 		}
 		if (prev_dir != isFacingRight) 		
 			this.move_timer = Time.deltaTime;
+		damage_particle.transform.position = damage_point;
 	}
 	#endregion
 
@@ -233,9 +243,8 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	public void Die() {
-		this.rigid_body.isKinematic = true;
-		this.GetComponent<SpriteRenderer> ().enabled = false;
-		this.current_state = MeemoState.Normal;
+		this.current_state = MeemoState.Dead;
+		this.transform.position = new Vector3 (-100f, -100f, -100f);
 		gameOverCanvas.enabled = true;
 	}
 	#endregion
