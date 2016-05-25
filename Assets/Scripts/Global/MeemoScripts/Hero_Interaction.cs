@@ -31,11 +31,12 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region starpower support
-	private const float MAX_STAR_TIMER = 2f;
-	private float star_timer = MAX_STAR_TIMER; // get 1 second of power up
+	public static float MAX_STAR_TIMER = 4f; // get 1 second of power up
+	private const float STAR_POWER_LEVEL = 25f;
+	private float star_timer = MAX_STAR_TIMER; 
 	private StarBar_interaction star_bar = null;
 	private bool is_using_power = false;
-	private ParticleSystem PowerAnimation; 
+	private ParticleSystem PowerAnimation;
 	#endregion
 
 	#region meemostate support
@@ -135,12 +136,12 @@ public class Hero_Interaction : MonoBehaviour {
 	#region starpower support
 	void fly () {
 		this.star_timer -= Time.fixedDeltaTime;
-		this.rigid_body.AddForce (new Vector2 (0f, 20f), ForceMode2D.Force);
+		this.rigid_body.AddForce (new Vector2 (0f, STAR_POWER_LEVEL), ForceMode2D.Force);
 		star_bar.UpdateStarBarSize (this.star_timer);
 	}
 
 	public void ResetStarPower() {
-		this.star_timer = 1f;
+		this.star_timer = Mathf.Min(this.star_timer + MAX_STAR_TIMER/2, MAX_STAR_TIMER);
 		star_bar.UpdateStarBarSize (this.star_timer);
 	}
 	#endregion
