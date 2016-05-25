@@ -240,6 +240,7 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 	#endregion
 
+	/*
 	#region collider support
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -257,4 +258,5 @@ public class Hero_Interaction : MonoBehaviour {
 		}
 	}
 	#endregion
+	*/
 }
