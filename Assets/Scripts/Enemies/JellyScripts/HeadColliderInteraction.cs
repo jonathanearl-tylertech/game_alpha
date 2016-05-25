@@ -20,6 +20,7 @@ public class HeadColliderInteraction : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player")
 		{
+			GetComponent<AudioSource> ().Play ();
 			Rigidbody2D hero_rigid = other.gameObject.GetComponent<Rigidbody2D>();
 			hero_rigid.velocity = new Vector3(hero_rigid.velocity.x, 0f, 0f);
 			// choose up or down bounce

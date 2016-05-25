@@ -8,9 +8,13 @@ public class PufferBehavior : MonoBehaviour {
 	public Animator anim;
 	public float bounce_force = 5f;
 
+	#region sound support
+	private bool audioIsEnabled = false;
+	private float soundTimer = 0.0f;
+	#endregion
+
 	#region state support
-	public enum PufferState
-	{
+	public enum PufferState {
 		Little,
 		Puffed
 	}
@@ -31,9 +35,17 @@ public class PufferBehavior : MonoBehaviour {
 			switch (currentState) {
 			case PufferState.Little:
 				if (Vector3.Distance (meemo.transform.position, transform.position) < distFromMeemoToActivateTrigger) {
-					currentState = PufferState.Puffed;
-					Debug.Log (currentState);
+					//Debug.Log (currentState);
 					anim.SetBool ("bool",true);
+					if (!audioIsEnabled)
+						audioIsEnabled = true;
+					else {
+						soundTimer += Time.deltaTime;
+						if (soundTimer > 0.03f) {
+							GetComponent<AudioSource> ().Play ();
+							currentState = PufferState.Puffed;
+						}
+					}
 				}
 				break;
 			case PufferState.Puffed:
@@ -42,7 +54,7 @@ public class PufferBehavior : MonoBehaviour {
 				} else {
 					if (timer >= MAX_TIME) {
 						currentState = PufferState.Little;
-						Debug.Log (currentState);
+						//Debug.Log (currentState);
 						anim.SetBool ("bool",false);
 					} else {
 						timer += Time.deltaTime;
