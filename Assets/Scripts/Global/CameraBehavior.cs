@@ -22,7 +22,6 @@ public class CameraBehavior: MonoBehaviour {
 	public float cameraMiny;
 	public float cameraMaxy;
 
-
 	private Transform target;
 	private Transform cam;
 
@@ -65,6 +64,7 @@ public class CameraBehavior: MonoBehaviour {
 
 		// limits the hero from moving backwards
 		cameraMinx = cam.position.x;
+
 		this.star_bar.UpdateStarBarInCamera ();
 		this.health_bar.UpdatePosition ();
 	}
@@ -89,6 +89,7 @@ public class CameraBehavior: MonoBehaviour {
     public void UpdateWorldWindowBound()
     {
 		Vector3 backgroundSize = GameObject.Find ("backgroundImage").GetComponent<Renderer> ().bounds.size;
+		Vector3 backgroundPos = GameObject.Find ("backgroundImage").GetComponent<Renderer> ().transform.position;
 
         float maxY = mCamera.orthographicSize;
         float maxX = mCamera.orthographicSize * mCamera.aspect;
@@ -106,11 +107,15 @@ public class CameraBehavior: MonoBehaviour {
         mWorldMin = new Vector2(mWorldBound.min.x, mWorldBound.min.y);
         mWorldMax = new Vector2(mWorldBound.max.x, mWorldBound.max.y);
 
+		//background displacement
+		float YDISP = backgroundPos.y;
+		float XDISP = backgroundPos.x;
+
 		//initialize global bounds including buffers
-		globalxMin = -mCamera.orthographicSize * mCamera.aspect + BUFFER;
-		globalxMax = backgroundSize.x - (mCamera.orthographicSize * mCamera.aspect) - BUFFER;
-		globalyMax = backgroundSize.y / 2f - 2*BUFFER;
-		globalyMin = -backgroundSize.y / 2f + BUFFER;
+		globalxMin = -mCamera.orthographicSize * mCamera.aspect + BUFFER + XDISP;
+		globalxMax = backgroundSize.x/2 - BUFFER + XDISP; //- (mCamera.orthographicSize * mCamera.aspect)
+		globalyMax = backgroundSize.y / 2f - BUFFER + YDISP;
+		globalyMin = -backgroundSize.y / 2f + BUFFER + YDISP;
     }
 
     public Vector2 WorldCenter { get { return mWorldCenter; } }
