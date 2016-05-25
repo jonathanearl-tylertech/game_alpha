@@ -82,7 +82,7 @@ public class Hero_Interaction : MonoBehaviour {
 		#endregion
 
 		#region sound support
-		sounds = GetComponents<AudioSource>();
+		sounds = GetComponentsInChildren <AudioSource>();
 		#endregion
 
 	}

@@ -40,8 +40,8 @@ public class PufferBehavior : MonoBehaviour {
 					if (!audioIsEnabled)
 						audioIsEnabled = true;
 					else {
-						soundTimer += Time.deltaTime;
-						if (soundTimer > 0.03f) {
+						soundTimer += Time.fixedDeltaTime;
+						if (soundTimer > 0.5f) {
 							GetComponent<AudioSource> ().Play ();
 							currentState = PufferState.Puffed;
 						}
