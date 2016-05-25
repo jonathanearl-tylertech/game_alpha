@@ -128,9 +128,10 @@ public class Hero_Interaction : MonoBehaviour {
 			this.change_direction ();
 			break;
 		case MeemoState.Hurt:
-			if (this.health_bar.curNumOfHearts > 0)
+			if (this.health_bar.curNumOfHearts > 0) {
 				this.health_bar.curNumOfHearts--;
-			sounds [2].Play ();
+				sounds [2].Play ();
+			}
 			if (this.health_bar.curNumOfHearts == 0)
 				this.Die ();
 			else
@@ -153,6 +154,7 @@ public class Hero_Interaction : MonoBehaviour {
 	//    }
 	#region starpower support
 	void fly () {
+		sounds[3].Play ();
 		this.star_timer -= Time.fixedDeltaTime;
 		this.rigid_body.AddForce (new Vector2 (0f, STAR_POWER_LEVEL), ForceMode2D.Force);
 		star_bar.UpdateStarBarSize (this.star_timer);
