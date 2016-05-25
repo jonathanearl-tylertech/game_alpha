@@ -5,16 +5,21 @@ public class Hero_Interaction : MonoBehaviour {
 	private Canvas gameOverCanvas;
 	CameraBehavior globalBehavior;
 
-	public float max_speed = 40f;
 	public float air_speed = 0.1f;
 	private Rigidbody2D rigid_body;
 	public Vector3 mSize;
-	private float move_speed = 0f;
 
 	#region healthbar support
 	public static int MAX_HEALTH = 5;
 	public int health = MAX_HEALTH;
 	HealthBar_interaction health_bar;
+	#endregion
+
+	#region movespeed support
+	private float max_speed = 8f;
+	private float move_speed = 0f;
+	private float move_timer;
+	private float duration = 0.3f;
 	#endregion
 
 	#region jump support
@@ -32,7 +37,8 @@ public class Hero_Interaction : MonoBehaviour {
 
 	#region starpower support
 	public static float MAX_STAR_TIMER = 4f; // get 1 second of power up
-	private const float STAR_POWER_LEVEL = 24f;
+	public static float START_STAR_TIMER_RATIO = 0f/4f;
+	private const float STAR_POWER_LEVEL = 30f;
 	private float star_timer = 0f; 
 	private StarBar_interaction star_bar = null;
 	private bool is_using_power = false;
@@ -67,6 +73,10 @@ public class Hero_Interaction : MonoBehaviour {
 		em.enabled = false;
 		gameOverCanvas.enabled = false;		// The GameOverCanvas has to be initially enabled on the Unity UI
 		current_state = MeemoState.Normal;
+		#region movespeed support
+		this.move_timer = Time.deltaTime;
+		#endregion
+
 	}
 
 	void FixedUpdate () {
@@ -74,7 +84,9 @@ public class Hero_Interaction : MonoBehaviour {
 		/// 
 		if (Mathf.Abs(this.move_speed) > 0.01f) {
 			//			this.rigid_body.AddForce (new Vector2 (move_speed, 0f), ForceMode2D.Force);
-			this.rigid_body.velocity = new Vector3(move_speed, rigid_body.velocity.y, 0f);
+			float t = (Time.time - this.move_timer) / this.duration;
+			float x_speed = Mathf.SmoothStep( this.rigid_body.velocity.x, this.move_speed, t);
+			this.rigid_body.velocity = new Vector3(x_speed, rigid_body.velocity.y, 0f);
 		}
 		if (is_using_power) {
 			fly ();
@@ -85,18 +97,14 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	void Update() {
+		// turn off powerup
+		is_using_power = false;
+		var em = this.PowerAnimation.emission;
+		em.enabled = false;
+
 		this.grounded = Physics2D.OverlapCircle (this.ground_check.position, this.ground_radius, this.what_is_ground);
 		this.move_speed = 0f;
-		if (Input.GetKey ("space") && this.star_timer > 0f) {
-			is_using_power = true;
-			var em = this.PowerAnimation.emission;
-			em.enabled = true;
-		}
-		else {
-			is_using_power = false;
-			var em = this.PowerAnimation.emission;
-			em.enabled = false;
-		}
+
 		switch (this.current_state) {
 		case MeemoState.Bubble:
 			if (Input.GetAxis ("Horizontal") != 0f) { // When meemo is controlling the horizontal direction
@@ -107,6 +115,7 @@ public class Hero_Interaction : MonoBehaviour {
 			this.change_direction ();
 			break;
 		case MeemoState.Normal:
+			this.service_star_power_update ();
 			this.move_speed = Input.GetAxis ("Horizontal") * max_speed;
 			this.change_direction ();
 			break;
@@ -144,10 +153,19 @@ public class Hero_Interaction : MonoBehaviour {
 		this.star_timer = Mathf.Min(this.star_timer + MAX_STAR_TIMER/2, MAX_STAR_TIMER);
 		star_bar.UpdateStarBarSize (this.star_timer);
 	}
+
+	void service_star_power_update() {
+		if (Input.GetKey ("space") && this.star_timer > 0f) {
+			is_using_power = true;
+			var em = this.PowerAnimation.emission;
+			em.enabled = true;
+		}
+	}
 	#endregion
 
 	#region direction support
 	private void change_direction() {
+		bool prev_dir = isFacingRight;
 		if (Input.GetAxis ("Horizontal") < 0f && isFacingRight) {
 			transform.localScale = new Vector3 (-.3f, .3f, 1f);
 			isFacingRight = false;
@@ -157,6 +175,8 @@ public class Hero_Interaction : MonoBehaviour {
 			transform.localScale = new Vector3 (.3f, .3f, 1f);
 			isFacingRight = true;
 		}
+		if (prev_dir != isFacingRight) 		
+			this.move_timer = Time.deltaTime;
 	}
 	#endregion
 

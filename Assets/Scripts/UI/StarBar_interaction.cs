@@ -7,7 +7,7 @@ public class StarBar_interaction : MonoBehaviour {
 	private float MIN_BAR_WIDTH = 0f;
 	private const float PERCENT_OF_CAMERA_WIDTH = 0.50f;
 	private const float PERCENT_OF_CAMERA_HEIGHT = 0.07f;
-	private float bar_ratio = 1f;
+	private float bar_ratio = Hero_Interaction.START_STAR_TIMER_RATIO;
 	private float max_width_relative_to_cam;
 	// Use this for initialization
 	void Start () {
