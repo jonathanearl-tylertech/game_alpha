@@ -31,7 +31,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region starpower support
-	private const float MAX_STAR_TIMER = 1f;
+	private const float MAX_STAR_TIMER = 2f;
 	private float star_timer = MAX_STAR_TIMER; // get 1 second of power up
 	private StarBar_interaction star_bar = null;
 	private bool is_using_power = false;
@@ -62,6 +62,8 @@ public class Hero_Interaction : MonoBehaviour {
 		this.star_bar = GameObject.Find ("StarBar").GetComponent<StarBar_interaction> ();
 		gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
 		this.PowerAnimation = GameObject.Find("PowerParticle").GetComponent<ParticleSystem> ();
+		var em = this.PowerAnimation.emission; // kinda hacky
+		em.enabled = false;
 		gameOverCanvas.enabled = false;		// The GameOverCanvas has to be initially enabled on the Unity UI
 		current_state = MeemoState.Normal;
 	}
@@ -86,12 +88,13 @@ public class Hero_Interaction : MonoBehaviour {
 		this.move_speed = 0f;
 		if (Input.GetKey ("space") && this.star_timer > 0f) {
 			is_using_power = true;
-			this.PowerAnimation.Play ();
+			var em = this.PowerAnimation.emission;
+			em.enabled = true;
 		}
 		else {
 			is_using_power = false;
-			this.PowerAnimation.Pause ();
-			this.PowerAnimation.Clear ();
+			var em = this.PowerAnimation.emission;
+			em.enabled = false;
 		}
 		switch (this.current_state) {
 		case MeemoState.Bubble:
