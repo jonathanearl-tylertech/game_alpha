@@ -5,9 +5,9 @@ public class StarBar_interaction : MonoBehaviour {
 	private CameraBehavior main_camera;
 	private float width;
 	private float MIN_BAR_WIDTH = 0f;
-	private const float PERCENT_OF_CAMERA_WIDTH = 0.33f;
+	private const float PERCENT_OF_CAMERA_WIDTH = 0.50f;
 	private const float PERCENT_OF_CAMERA_HEIGHT = 0.07f;
-	private float bar_ratio = 1f;
+	private float bar_ratio = Hero_Interaction.START_STAR_TIMER_RATIO;
 	private float max_width_relative_to_cam;
 	// Use this for initialization
 	void Start () {
@@ -36,8 +36,9 @@ public class StarBar_interaction : MonoBehaviour {
 	}
 
 	public void UpdateStarBarSize(float timer_left) {
-		if (timer_left < MIN_BAR_WIDTH)
+		float current_ratio = timer_left / Hero_Interaction.MAX_STAR_TIMER;
+		if (current_ratio < MIN_BAR_WIDTH)
 			return;
-		this.bar_ratio = timer_left;
+		this.bar_ratio = current_ratio;
 	}
 }
