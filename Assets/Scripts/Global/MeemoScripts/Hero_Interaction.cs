@@ -32,8 +32,8 @@ public class Hero_Interaction : MonoBehaviour {
 
 	#region starpower support
 	public static float MAX_STAR_TIMER = 4f; // get 1 second of power up
-	private const float STAR_POWER_LEVEL = 25f;
-	private float star_timer = MAX_STAR_TIMER; 
+	private const float STAR_POWER_LEVEL = 24f;
+	private float star_timer = 0f; 
 	private StarBar_interaction star_bar = null;
 	private bool is_using_power = false;
 	private ParticleSystem PowerAnimation;
