@@ -130,6 +130,7 @@ public class Hero_Interaction : MonoBehaviour {
 		case MeemoState.Hurt:
 			if (this.health_bar.curNumOfHearts > 0)
 				this.health_bar.curNumOfHearts--;
+			sounds [2].Play ();
 			if (this.health_bar.curNumOfHearts == 0)
 				this.Die ();
 			else
