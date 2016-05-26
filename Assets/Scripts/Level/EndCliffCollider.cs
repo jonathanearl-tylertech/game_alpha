@@ -20,7 +20,7 @@ public class EndCliffCollider : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("collided with cliff(1)");
+			other.gameObject.GetComponent<Hero_Interaction> ().current_state = Hero_Interaction.MeemoState.Dead;
             // Code to handle electricity and bouncing out
             winningPanel.SetActive(true);
         }
