@@ -64,8 +64,8 @@ public class Angler_interaction : MonoBehaviour {
 		if (meemo.transform.position.x > transform.position.x - 10.0f) {
 			CameraBehavior mainCamera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraBehavior> ();
 			AudioSource[] cSounds = mainCamera.GetComponentsInChildren<AudioSource> ();
-			cSounds [0].Pause();
-			cSounds [2].Play ();
+			//cSounds [0].Pause();
+			//cSounds [2].Play ();
 		}
 	}
 	#endregion
