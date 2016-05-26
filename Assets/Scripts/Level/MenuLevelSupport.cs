@@ -23,8 +23,7 @@ public class MenuLevelSupport : MonoBehaviour {
 			() => {                     // Lamda operator: define an annoymous function
 				LoadScene("Menu");
 			});
-
-	}
+    }
 		
 	// Update is called once per frame
 	void Update () {
