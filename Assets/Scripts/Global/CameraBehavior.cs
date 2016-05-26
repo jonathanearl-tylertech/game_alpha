@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CameraBehavior: MonoBehaviour {
@@ -75,7 +76,12 @@ public class CameraBehavior: MonoBehaviour {
 		this.health_bar.UpdatePosition ();
 	}
 
-	void update() {}
+	void Update() {
+		if (Input.GetKeyDown ("1"))
+			SceneManager.LoadScene ("Jump");
+		if (Input.GetKeyDown ("2"))
+			SceneManager.LoadScene ("Level2Scene");
+	}
 
     #region Game Window World size bound support
     public enum WorldBoundStatus
