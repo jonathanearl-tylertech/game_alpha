@@ -11,7 +11,6 @@ public class StarBar_interaction : MonoBehaviour {
 	private float max_width_relative_to_cam;
 	// Use this for initialization
 	void Start () {
-		this.main_camera = GameObject.Find ("Main Camera").GetComponent<CameraBehavior> ();
 		UpdateStarBarInCamera ();
 	}
 	
@@ -27,8 +26,8 @@ public class StarBar_interaction : MonoBehaviour {
 		this.width = cam_width * PERCENT_OF_CAMERA_WIDTH * this.bar_ratio; 
 		float height = cam_height * PERCENT_OF_CAMERA_HEIGHT; // height is 5 % of the screen
 		// get position of bar
-		float x = main_camera.transform.position.x;
-		float y = main_camera.transform.position.y + cam_height - height;
+		float x = Camera.main.transform.position.x;
+		float y = Camera.main.transform.position.y + cam_height - height;
 		max_width_relative_to_cam = cam_width * PERCENT_OF_CAMERA_WIDTH;
 		float x_offset = (1f - this.bar_ratio) * max_width_relative_to_cam / 2f;
 		this.transform.position = new Vector3 (x - x_offset, y, 0f);

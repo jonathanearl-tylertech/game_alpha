@@ -68,7 +68,7 @@ public class Hero_Interaction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.damage_point = Vector3.zero;
-		this.globalBehavior = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
+		this.globalBehavior = Camera.main.GetComponent<CameraBehavior>();
 		mSize = GetComponent<Renderer> ().bounds.size;
 		this.health_bar = GameObject.Find ("HealthBar").GetComponent<HealthBar_interaction> ();
 		this.rigid_body = this.GetComponent<Rigidbody2D>();
@@ -234,11 +234,11 @@ public class Hero_Interaction : MonoBehaviour {
 	#region camera support
 	private void ClampToCamera() {
 		// Handle when hero collided with the bottom bound of the window (die)
-		Vector3 pos = globalBehavior.mCamera.WorldToViewportPoint (transform.position);
+		Vector3 pos = Camera.main.WorldToViewportPoint (transform.position);
 		Vector3 backgroundSize = GameObject.Find ("backgroundImage").GetComponent<Renderer> ().bounds.size;
 		pos.x = Mathf.Clamp (pos.x, 0.03f, 1f - (mSize.x / backgroundSize.x)); //(1f / backgroundSize.x * mSize.x / 2f));
 		pos.y = Mathf.Clamp (pos.y, 0.035f, 1f - (mSize.y / backgroundSize.y));
-		transform.position = globalBehavior.mCamera.ViewportToWorldPoint (pos);
+		transform.position = Camera.main.ViewportToWorldPoint (pos);
 
 		CheckDeath ();
 	}

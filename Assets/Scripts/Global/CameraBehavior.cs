@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraBehavior: MonoBehaviour {
 
-	private const float BUFFER = 10f;
+	private float BUFFER;// = 10f;
     #region World Bound support
     private Bounds mWorldBound;  // this is the world bound
     private Vector2 mWorldMin;  // Better support 2D interactions
@@ -32,14 +32,20 @@ public class CameraBehavior: MonoBehaviour {
 	private StarBar_interaction star_bar = null;
 	private HealthBar_interaction health_bar = null;
 	#endregion
+
+	#region multilevel support
+	public enum GameLevel {
+		Level1,
+		Level2
+	}
+	public GameLevel currentLevel;
+	public string backgroundName;
+	#endregion
+
     // Use this for initialization
     void Start () {
-		/*
-		globalxMax = 76f;
-		globalxMin = 0f;
-		globalyMax = 9.8f;
-		globalyMin = -9.9f;*/
-		//Screen.SetResolution(960, 640, true);
+		getLevel ();
+
 
         mCamera = GetComponent<Camera>();
 		target = GameObject.Find("Meemo").transform;
@@ -63,7 +69,7 @@ public class CameraBehavior: MonoBehaviour {
 			transform.position = new Vector3 (Mathf.Clamp (target.position.x, cameraMinx, cameraMaxx), Mathf.Clamp (target.position.y, cameraMiny, cameraMaxy), transform.position.z);  
 
 		// limits the hero from moving backwards
-		cameraMinx = cam.position.x;
+		//cameraMinx = cam.position.x;
 
 		this.star_bar.UpdateStarBarInCamera ();
 		this.health_bar.UpdatePosition ();
@@ -89,6 +95,7 @@ public class CameraBehavior: MonoBehaviour {
     public void UpdateWorldWindowBound()
     {
 		Vector3 backgroundSize = GameObject.Find ("backgroundImage").GetComponent<Renderer> ().bounds.size;
+		Debug.Log (backgroundSize);
 		Vector3 backgroundPos = GameObject.Find ("backgroundImage").GetComponent<Renderer> ().transform.position;
 
         float maxY = mCamera.orthographicSize;
@@ -176,4 +183,20 @@ public class CameraBehavior: MonoBehaviour {
         return status;
     }*/
     #endregion
+
+	#region multilevel support
+	public void getLevel() {
+		string level = UnityEngine.SceneManagement.SceneManager.GetActiveScene ().name;
+		switch (level) {
+		case "Jump":
+			currentLevel = GameLevel.Level1;
+			BUFFER = 10f;
+			break;
+		case "Level2Scene":
+			currentLevel = GameLevel.Level2;
+			BUFFER = 0f;
+			break;
+		}
+	}
+	#endregion
 }
