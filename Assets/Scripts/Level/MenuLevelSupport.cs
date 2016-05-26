@@ -18,7 +18,7 @@ public class MenuLevelSupport : MonoBehaviour {
 		// add in listener
 		mRestart.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
-				LoadScene("Jump");
+				LoadScene(SceneManager.GetActiveScene().name);
 			});
 		mMenu.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
