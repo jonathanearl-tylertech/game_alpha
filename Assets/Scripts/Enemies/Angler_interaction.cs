@@ -18,6 +18,10 @@ public class Angler_interaction : MonoBehaviour {
 	public AnglarState currentState;
 	#endregion
 
+	#region sound support
+	private bool soundIsPlayed = false;
+	#endregion
+
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +33,12 @@ public class Angler_interaction : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Canvas gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
+
+		#region sound support
+		if(!soundIsPlayed)
+			playSlowMusic();
+		#endregion
+
 		if (currentState == AnglarState.Stationary && !gameOverCanvas.enabled) {
 			Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
 			if (meemo.transform.position.x > transform.position.x - 2.5f ){ //Vector3.Distance (meemo.transform.position, transform.position) < distFromMeemoToActivateTrigger) {
@@ -47,4 +57,16 @@ public class Angler_interaction : MonoBehaviour {
 		}
 
 	}
+
+	#region sound support
+	void playSlowMusic() {
+		Hero_Interaction meemo = GameObject.FindGameObjectWithTag ("Player").GetComponent<Hero_Interaction> ();
+		if (meemo.transform.position.x > transform.position.x - 10.0f) {
+			CameraBehavior mainCamera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraBehavior> ();
+			AudioSource[] cSounds = mainCamera.GetComponentsInChildren<AudioSource> ();
+			cSounds [0].Pause();
+			cSounds [2].Play ();
+		}
+	}
+	#endregion
 }

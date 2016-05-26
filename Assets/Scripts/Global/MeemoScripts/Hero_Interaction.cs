@@ -59,7 +59,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region sound support
-	private AudioSource[] sounds;
+	public AudioSource[] sounds;
 	#endregion
 
 	// Use this for initialization
