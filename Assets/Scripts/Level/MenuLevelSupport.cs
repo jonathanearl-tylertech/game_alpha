@@ -27,7 +27,7 @@ public class MenuLevelSupport : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 
 	void LoadScene(string theLevel) {
