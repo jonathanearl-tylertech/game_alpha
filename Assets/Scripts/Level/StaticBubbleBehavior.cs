@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class StaticBubbleBehavior : MonoBehaviour {
-    public float mSpeed = Random.Range(1f, 5f);
+    public float mSpeed;
     public float mTowardsCenter = 1f;
     //private EnemyState currentState;
     public bool enemyMove = false;
@@ -11,6 +11,7 @@ public class StaticBubbleBehavior : MonoBehaviour {
     void Start () {
         newDirection();
         //currentState = EnemyState.Normal;
+		mSpeed = Random.Range(1f, 5f);
 	}
 	
 	// Update is called once per frame
