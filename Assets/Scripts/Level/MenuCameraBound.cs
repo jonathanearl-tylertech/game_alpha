@@ -15,6 +15,8 @@ public class MenuCameraBound : MonoBehaviour {
     public bool enemyMovment = false;
     public int countEgg = 0;
     public int countEnemy = 50;
+    private float ranX;
+    private float ranY;
 
 
     // Use this for initialization
@@ -23,19 +25,20 @@ public class MenuCameraBound : MonoBehaviour {
         mMainCamera = Camera.main;
         mWorldBound = new Bounds(Vector3.zero, Vector3.one);
         updateWorldWindowBound();
-        
+        ranX = Random.Range(mWorldMin.x, mWorldMax.x);
+        ranY = Random.Range(mWorldMin.y, mWorldMax.y);
         for (int i = 0; i < 5; i++)
         {
-            float posX = Random.Range(mWorldMin.x, mWorldMax.x);
-            float posY = Random.Range(mWorldMin.y, mWorldMax.y);
+            ranX = Random.Range(mWorldMin.x, mWorldMax.x);
+            ranY = Random.Range(mWorldMin.y, mWorldMax.y);
             mEnemyToSpawn = Resources.Load("Prefabs/StaticBubblePrefab") as GameObject;
-            e = (GameObject)Instantiate(mEnemyToSpawn, new Vector3(posX, posY, 0f), Quaternion.identity);
+            e = (GameObject)Instantiate(mEnemyToSpawn, new Vector3(ranX, ranY, 0f), Quaternion.identity);
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if(enemyMovment)
+        if (enemyMovment)
             spawnAnEnemy();
 
     }

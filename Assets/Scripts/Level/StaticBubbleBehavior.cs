@@ -48,7 +48,7 @@ public class StaticBubbleBehavior : MonoBehaviour {
 
         float useV = 1.0f - Mathf.Clamp(mTowardsCenter, 0.01f, 1.0f);
         float tanSpread = Mathf.Tan(useV * Mathf.PI / 2.0f);
-        float randomX = Random.Range(0f, 10f);
+        float randomX = Random.Range(0f, 1f);
         float yRange = tanSpread * randomX;
         float randomY = Random.Range(-yRange, yRange);
 

@@ -16,7 +16,7 @@ public class LoadSceneSupport : MonoBehaviour {
 	void Start () {
         creditCanvas.enabled = false;
         // Workflow assume:
-        //      mLevelOneButton: is dragged/placed from UI
+        //      m-Buttons: are dragged/placed from UI
         // add in listener
         mStart.onClick.AddListener(
                 () => {                     // Lamda operator: define an annoymous function

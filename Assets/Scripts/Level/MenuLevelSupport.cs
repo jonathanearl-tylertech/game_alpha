@@ -24,9 +24,12 @@ public class MenuLevelSupport : MonoBehaviour {
 			() => {                     // Lamda operator: define an annoymous function
 				LoadScene("Menu");
 			});
-		mNextLevel.onClick.AddListener(
+        mNextLevel.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
-				LoadScene("Level2Scene");
+                if (SceneManager.GetActiveScene().name == "Jump")
+                    LoadScene("Level2Scene");
+                else if (SceneManager.GetActiveScene().name == "Level2Scene")
+                    Application.Quit();
 			});
     }
 		
