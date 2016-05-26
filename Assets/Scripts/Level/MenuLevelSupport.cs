@@ -9,6 +9,7 @@ public class MenuLevelSupport : MonoBehaviour {
 
 	public Button mMenu;
 	public Button mRestart;
+	public Button mNextLevel;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,10 @@ public class MenuLevelSupport : MonoBehaviour {
 		mMenu.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
 				LoadScene("Menu");
+			});
+		mNextLevel.onClick.AddListener(
+			() => {                     // Lamda operator: define an annoymous function
+				LoadScene("Level2Scene");
 			});
     }
 		

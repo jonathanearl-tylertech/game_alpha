@@ -59,7 +59,7 @@ public class CameraBehavior: MonoBehaviour {
     }
 
 	void LateUpdate(){
-		if(GameObject.Find("Meemo") != null)
+		if(GameObject.Find("Meemo").GetComponent<Hero_Interaction>().current_state != Hero_Interaction.MeemoState.Dead)
 			transform.position = new Vector3 (Mathf.Clamp (target.position.x, cameraMinx, cameraMaxx), Mathf.Clamp (target.position.y, cameraMiny, cameraMaxy), transform.position.z);  
 
 		// limits the hero from moving backwards
