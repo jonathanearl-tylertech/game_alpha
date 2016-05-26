@@ -2,11 +2,11 @@
 using System.Collections;
 
 public class CollectableHeartBehavior : MonoBehaviour {
-	private AudioSource collectingSound;
+	//private AudioSource collectingSound;
 
 	// Use this for initialization
 	void Start () {
-		collectingSound = GetComponent<AudioSource> ();
+		//collectingSound = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame

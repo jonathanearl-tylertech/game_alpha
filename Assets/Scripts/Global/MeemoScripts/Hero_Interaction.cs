@@ -61,6 +61,10 @@ public class Hero_Interaction : MonoBehaviour {
 	private const float MAX_HURT_TIME = 0.5f;
 	#endregion
 
+	#region sound support
+	private AudioSource[] sounds;
+	#endregion
+
 	// Use this for initialization
 	void Start () {
 		this.damage_point = Vector3.zero;
@@ -81,6 +85,10 @@ public class Hero_Interaction : MonoBehaviour {
 		this.move_timer = Time.deltaTime;
 		#endregion
 		damage_particle = GameObject.Find ("PainParticle").GetComponent<ParticleSystem> ();
+		#region sound support
+		sounds = GetComponents<AudioSource>();
+		#endregion
+
 	}
 
 	void FixedUpdate () {
@@ -127,8 +135,10 @@ public class Hero_Interaction : MonoBehaviour {
 			damage_point = this.transform.position;
 			damage_particle.transform.position = damage_point;
 			damage_particle.Emit(30);
-			if (this.health_bar.curNumOfHearts > 0)
+			if (this.health_bar.curNumOfHearts > 0) {
 				this.health_bar.curNumOfHearts--;
+				sounds [2].Play ();
+			}
 			if (this.health_bar.curNumOfHearts == 0)
 				this.Die ();
 			else
@@ -153,6 +163,7 @@ public class Hero_Interaction : MonoBehaviour {
 	//    }
 	#region starpower support
 	void fly () {
+		sounds[3].Play ();
 		this.star_timer -= Time.fixedDeltaTime;
 		this.rigid_body.AddForce (new Vector2 (0f, STAR_POWER_LEVEL), ForceMode2D.Force);
 		star_bar.UpdateStarBarSize (this.star_timer);
@@ -249,23 +260,31 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 	#endregion
 
-	/*
-	#region collider support
+
+	#region sound support
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Player")
+		if (other.gameObject.tag == "heart")
 		{
-			// Code
 			HealthBar_interaction healthBar = GameObject.FindGameObjectWithTag ("HealthBar").GetComponent<HealthBar_interaction> ();
+			CollectableHeartBehavior heart = other.GetComponent<CollectableHeartBehavior> ();
 			if (healthBar.curNumOfHearts < Hero_Interaction.MAX_HEALTH) {
 				healthBar.curNumOfHearts++;
-				collectingSound.Play ();
 			}
-
+			sounds [0].Play ();
 			Debug.Log("Meemo touches heart");
-			Destroy (this.gameObject);
+			Destroy (heart.gameObject);
+		}
+
+		if (other.gameObject.tag == "star")
+		{
+			CollectableStarBehavior star = other.GetComponent<CollectableStarBehavior> ();
+			sounds [1].Play ();
+			Debug.Log("Meemo touches star");
+			ResetStarPower ();
+			Destroy (star.gameObject);
 		}
 	}
 	#endregion
-	*/
+
 }
