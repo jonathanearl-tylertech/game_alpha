@@ -62,7 +62,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 	#region sound support
-	private AudioSource[] sounds;
+	public AudioSource[] sounds;
 	#endregion
 
 	// Use this for initialization
@@ -86,7 +86,7 @@ public class Hero_Interaction : MonoBehaviour {
 		#endregion
 		damage_particle = GameObject.Find ("PainParticle").GetComponent<ParticleSystem> ();
 		#region sound support
-		sounds = GetComponents<AudioSource>();
+		sounds = GetComponentsInChildren <AudioSource>();
 		#endregion
 
 	}
@@ -261,7 +261,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#endregion
 
 
-	#region sound support
+	#region sound and power-up support
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "heart")
