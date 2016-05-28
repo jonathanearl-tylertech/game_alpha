@@ -7,6 +7,8 @@ public class TentacleColliderInteraction : MonoBehaviour {
 	float current_time_passed = 0;
 	public float max_time = 1f;
 
+
+
 	// Use this for initialization
 	void Start () {
 		ps = this.GetComponent<ParticleSystem> ();
@@ -27,6 +29,11 @@ public class TentacleColliderInteraction : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "Player")
 		{
+			#region meemoHurtFace animation support
+			Animator meemoAnim = other.GetComponent<Animator>();
+			meemoAnim.SetTrigger("hurtMeemo");
+			#endregion
+
 			// Code to handle electricity and bouncing out
 			ps.Play ();
 			this.play_animation = true;
