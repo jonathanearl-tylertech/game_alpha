@@ -47,6 +47,13 @@ public class Hero_Interaction : MonoBehaviour {
 	private Vector3 damage_point;
 	#endregion
 
+	#region hurt_state support
+	public MeemoState current_state;
+	private float hurt_timer = 0f;
+	private const float MAX_HURT_TIME = 0.5f;
+	private bool is_dimmer = true;
+	#endregion
+
 	#region meemostate support
 	public enum MeemoState
 	{
@@ -56,9 +63,6 @@ public class Hero_Interaction : MonoBehaviour {
 		Invincible,
 		Dead
 	}
-	public MeemoState current_state;
-	private float hurt_timer = 0f;
-	private const float MAX_HURT_TIME = 0.5f;
 	#endregion
 
 	#region sound support
@@ -145,10 +149,25 @@ public class Hero_Interaction : MonoBehaviour {
 				this.current_state = MeemoState.Invincible;
 			break;
 		case MeemoState.Invincible:
+			Renderer renderer = gameObject.GetComponent<Renderer> ();
+			Color color = renderer.material.color;
+			if (color.a >= 1f) {
+				is_dimmer = true;
+			} else if (color.a < 0.3f) {
+				is_dimmer = false;
+			}
+			if (is_dimmer)
+				color.a -= Time.deltaTime * 10f;
+			else
+				color.a += Time.deltaTime * 10f;
+
+			renderer.material.color = color;
 			this.hurt_timer += Time.deltaTime;
 			if (this.hurt_timer > MAX_HURT_TIME) {
 				this.current_state = MeemoState.Normal;
 				this.hurt_timer = 0f;
+				color.a = 1f;
+				renderer.material.color = color;
 			}
 			break;
 		}

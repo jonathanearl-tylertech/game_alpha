@@ -26,7 +26,6 @@ public class SquidBehaviour : MonoBehaviour {
 		} else if (currentY < minY) {
 			isMovingUp = true;
 		}
-		float direction;
 		if (isMovingUp) {
 			MoveUp ();
 		} else {

@@ -19,7 +19,9 @@ public class OnTriggerHurtSupport : MonoBehaviour {
 			Rigidbody2D meemo_rigid = other.gameObject.GetComponent<Rigidbody2D> ();
 			meemo_rigid.velocity = Vector3.zero;
 			// set to hurt state
-			other.gameObject.GetComponent<Hero_Interaction> ().current_state = Hero_Interaction.MeemoState.Hurt;
+			Hero_Interaction meemo_interaction = other.gameObject.GetComponent<Hero_Interaction> ();
+			if (meemo_interaction.current_state != Hero_Interaction.MeemoState.Invincible)
+				meemo_interaction.current_state = Hero_Interaction.MeemoState.Hurt;
 			// get direction to push meemo
 			float direction;
 			if (other.gameObject.transform.position.x > this.transform.position.x)
