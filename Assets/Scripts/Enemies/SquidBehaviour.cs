@@ -2,45 +2,43 @@
 using System.Collections;
 
 public class SquidBehaviour : MonoBehaviour {
-	public float distance = 4f;
+	public float distance = 2f;
+	public float speed = 1f;
 	public Vector3 initpos;
-	public float maxY;
+	private float maxY;
+	private float minY;
 	//public float minY;
-	public bool isMovingUp;
+	private bool isMovingUp;
 
 	// Use this for initialization
 	void Start () {
 		initpos = transform.position;
 		maxY = initpos.y + distance;
-		//minY = initpos - distance;
+		minY = initpos.y - distance;
 		isMovingUp = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		float currentY = transform.position.y; 
-		if (isMovingUp && currentY < maxY) {
-			MoveUp ();
-		}
-		if(isMovingUp && currentY >= maxY){
+		if (currentY > maxY) {
 			isMovingUp = false;
-			MoveDown ();
-		}
-		if (!isMovingUp && currentY > initpos.y) {
-			MoveDown ();
-		}
-		if (!isMovingUp && currentY <= initpos.y) {
+		} else if (currentY < minY) {
 			isMovingUp = true;
-			MoveUp ();
 		}
-	
+		float direction;
+		if (isMovingUp) {
+			MoveUp ();
+		} else {
+			MoveDown ();
+		}
 	}
 
 	private void MoveUp(){
-		transform.position = new Vector3(transform.position.x, transform.position.y + 0.015f, transform.position.z);
+		transform.position = new Vector3(transform.position.x, transform.position.y + speed * Time.deltaTime, transform.position.z);
 	}
 
 	private void MoveDown(){
-		transform.position = new Vector3(transform.position.x, transform.position.y - 0.015f, transform.position.z);
+		transform.position = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
 	}
 }
