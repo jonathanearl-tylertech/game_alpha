@@ -4,7 +4,7 @@ using System.Collections;
 
 public class CameraBehavior: MonoBehaviour {
 
-	private float BUFFER;// = 10f;
+	//private float BUFFER;// = 10f;
     #region World Bound support
     private Bounds mWorldBound;  // this is the world bound
     private Vector2 mWorldMin;  // Better support 2D interactions
@@ -56,7 +56,7 @@ public class CameraBehavior: MonoBehaviour {
         mWorldBound = new Bounds(Vector3.zero, Vector3.one);
         UpdateWorldWindowBound();
 
-		cameraMinx = 0f;
+		cameraMinx = globalxMin + mCamera.orthographicSize * mCamera.aspect;
 		cameraMaxx = globalxMax - mCamera.orthographicSize * mCamera.aspect;
 		cameraMiny = globalyMin + mCamera.orthographicSize;
 		cameraMaxy = globalyMax - mCamera.orthographicSize;
@@ -125,10 +125,10 @@ public class CameraBehavior: MonoBehaviour {
 		float XDISP = backgroundPos.x;
 
 		//initialize global bounds including buffers
-		globalxMin = -mCamera.orthographicSize * mCamera.aspect + BUFFER + XDISP;
-		globalxMax = backgroundSize.x/2 - BUFFER + XDISP; //- (mCamera.orthographicSize * mCamera.aspect)
-		globalyMax = backgroundSize.y / 2f - BUFFER + YDISP;
-		globalyMin = -backgroundSize.y / 2f + BUFFER + YDISP;
+		globalxMin = XDISP - backgroundSize.x/2; //-mCamera.orthographicSize * mCamera.aspect + XDISP;
+		globalxMax = backgroundSize.x/2 + XDISP; //- (mCamera.orthographicSize * mCamera.aspect)
+		globalyMax = backgroundSize.y / 2f + YDISP;
+		globalyMin = -backgroundSize.y / 2f + YDISP;
     }
 
     public Vector2 WorldCenter { get { return mWorldCenter; } }
@@ -157,37 +157,6 @@ public class CameraBehavior: MonoBehaviour {
         }
         return status;
     }
-	/*
-    public WorldBoundStatus ObjectClampToWorldBound(Transform t)
-    {
-        WorldBoundStatus status = WorldBoundStatus.Inside;
-        Vector3 p = t.position;
-
-		if (p.x > mWorldBound.max.x)
-        {
-            status = WorldBoundStatus.CollideRight;
-			p.x = mWorldBound.max.x;
-        }
-		else if (t.position.x < globalxMin)//mWorldBound.min.x)
-        {
-            status = WorldBoundStatus.CollideLeft;
-			p.x = mWorldBound.min.x;
-        }
-
-		if (p.y > mWorldBound.max.y)
-        {
-            status = WorldBoundStatus.CollideTop;
-			p.y = mWorldBound.max.y;
-        }
-        else if (p.y < mWorldBound.min.y)
-        {
-			status = WorldBoundStatus.CollideBottom;
-			p.y = mWorldBound.min.y;
-        }
-
-        t.position = p;
-        return status;
-    }*/
     #endregion
 
 	#region multilevel support
@@ -196,11 +165,9 @@ public class CameraBehavior: MonoBehaviour {
 		switch (level) {
 		case "Jump":
 			currentLevel = GameLevel.Level1;
-			BUFFER = 10f;
 			break;
 		case "Level2Scene":
 			currentLevel = GameLevel.Level2;
-			BUFFER = 0f;
 			break;
 		}
 	}
