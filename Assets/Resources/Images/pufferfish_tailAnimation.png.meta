@@ -1,9 +1,14 @@
 fileFormatVersion: 2
 guid: df4f0383be7e241909e8d27531ec2575
-timeCreated: 1463600992
+timeCreated: 1464462755
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: pufferfish_tailAnimation_0
+    21300002: pufferfish_tailAnimation_1
+    21300004: pufferfish_tailAnimation_2
+    21300006: pufferfish_tailAnimation_3
+    21300008: pufferfish_tailAnimation_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,8 +34,8 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
-    aniso: -1
+    filterMode: 0
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +43,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +54,113 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: pufferfish_tailAnimation_0
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 125
+        width: 177
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 50.5, y: 47}
+        - {x: 16.5, y: 59}
+        - {x: -67.5, y: 59}
+        - {x: -88.5, y: 48}
+        - {x: -88.5, y: -59}
+        - {x: 74.5, y: -59}
+        - {x: 88.5, y: -52}
+        - {x: 88.5, y: -26}
+    - name: pufferfish_tailAnimation_1
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 138
+        width: 178
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 18, y: 48.5}
+        - {x: -78, y: 48.5}
+        - {x: -89, y: 39.5}
+        - {x: -89, y: -0.5}
+        - {x: -79, y: -32.5}
+        - {x: -56, y: -48.5}
+        - {x: 89, y: -48.5}
+        - {x: 89, y: -6.5}
+        - {x: 80, y: 13.5}
+    - name: pufferfish_tailAnimation_2
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 121
+        width: 175
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -87.5, y: -40}
+        - {x: -25.5, y: -57}
+        - {x: 84.5, y: -57}
+        - {x: 87.5, y: -52}
+        - {x: 87.5, y: -31}
+        - {x: 53.5, y: 48}
+        - {x: 25.5, y: 57}
+        - {x: -63.5, y: 57}
+        - {x: -87.5, y: 38}
+    - name: pufferfish_tailAnimation_3
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 109
+        width: 165
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.5, y: 59.5}
+        - {x: -41.5, y: 59.5}
+        - {x: -73.5, y: 46.5}
+        - {x: -82.5, y: 39.5}
+        - {x: -82.5, y: 17.5}
+        - {x: -80.5, y: 11.5}
+        - {x: -68.5, y: -18.5}
+        - {x: -18.5, y: -44.5}
+        - {x: 19.5, y: -40.5}
+        - {x: 33.5, y: -34.5}
+        - {x: 51.5, y: -59.5}
+        - {x: 68.5, y: -59.5}
+        - {x: 82.5, y: -55.5}
+        - {x: 82.5, y: -36.5}
+        - {x: 45.5, y: 39.5}
+        - {x: 28.5, y: 57.5}
+    - name: pufferfish_tailAnimation_4
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 114
+        width: 175
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -87.5, y: -40}
+        - {x: -25.5, y: -57}
+        - {x: 84.5, y: -57}
+        - {x: 87.5, y: -52}
+        - {x: 87.5, y: -31}
+        - {x: 53.5, y: 48}
+        - {x: 25.5, y: 57}
+        - {x: -63.5, y: 57}
+        - {x: -87.5, y: 38}
     outline: []
   spritePackingTag: 
   userData: 
