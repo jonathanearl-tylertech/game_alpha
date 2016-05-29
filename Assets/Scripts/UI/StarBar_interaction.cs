@@ -9,6 +9,8 @@ public class StarBar_interaction : MonoBehaviour {
 	private const float PERCENT_OF_CAMERA_HEIGHT = 0.07f;
 	private float bar_ratio = Hero_Interaction.START_STAR_TIMER_RATIO;
 	private float max_width_relative_to_cam;
+	private float y_offset = 0.455f;
+
 	// Use this for initialization
 	void Start () {
 		UpdateStarBarInCamera ();
@@ -30,7 +32,7 @@ public class StarBar_interaction : MonoBehaviour {
 		float y = Camera.main.transform.position.y + cam_height - height;
 		max_width_relative_to_cam = cam_width * PERCENT_OF_CAMERA_WIDTH;
 		float x_offset = (1f - this.bar_ratio) * max_width_relative_to_cam / 2f;
-		this.transform.position = new Vector3 (x - x_offset, y, 0f);
+		this.transform.position = new Vector3 (x - x_offset, y -  y_offset, 0f);
 		this.transform.localScale = new Vector3 (width, height, 0f);
 	}
 
