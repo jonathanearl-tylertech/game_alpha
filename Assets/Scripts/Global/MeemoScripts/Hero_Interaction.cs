@@ -263,11 +263,16 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	private void CheckDeath() {
+		// check if meemo has passed the world bound 
 		if (transform.position.y - mSize.y/2f <= globalBehavior.globalyMin)
 		{
 			// Destroy Meemo
 			// TimeScale = 0;
 			// Panel is active
+			Die();
+		}
+		else if (transform.position.y - mSize.y/2f >= globalBehavior.globalyMax)
+		{
 			Die();
 		}
 	}
