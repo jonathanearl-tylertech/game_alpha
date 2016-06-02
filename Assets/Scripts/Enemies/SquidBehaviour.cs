@@ -7,7 +7,6 @@ public class SquidBehaviour : MonoBehaviour {
 	public Vector3 initpos;
 	private float maxY;
 	private float minY;
-	//public float minY;
 	private bool isMovingUp;
 
 	// Use this for initialization
