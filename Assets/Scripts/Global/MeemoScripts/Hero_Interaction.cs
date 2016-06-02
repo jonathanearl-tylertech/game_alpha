@@ -185,7 +185,7 @@ public class Hero_Interaction : MonoBehaviour {
 		sounds[3].Play ();
 		this.star_timer -= Time.fixedDeltaTime;
 		this.rigid_body.AddForce (new Vector2 (0f, STAR_POWER_LEVEL), ForceMode2D.Force);
-		star_bar.UpdateStarBarSize (this.star_timer);
+		star_bar.UpdateStarBarSizeInstant (this.star_timer);
 	}
 
 	public void ResetStarPower() {
