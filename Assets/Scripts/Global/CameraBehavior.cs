@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CameraBehavior: MonoBehaviour {
@@ -34,18 +33,8 @@ public class CameraBehavior: MonoBehaviour {
 	private HealthBar_interaction health_bar = null;
 	#endregion
 
-	#region multilevel support
-	public enum GameLevel {
-		Level1,
-		Level2
-	}
-	public GameLevel currentLevel;
-	public string backgroundName;
-	#endregion
-
     // Use this for initialization
     void Start () {
-		getLevel ();
 
 
         mCamera = GetComponent<Camera>();
@@ -77,10 +66,6 @@ public class CameraBehavior: MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown ("1"))
-			SceneManager.LoadScene ("Jump");
-		if (Input.GetKeyDown ("2"))
-			SceneManager.LoadScene ("Level2Scene");
 	}
 
     #region Game Window World size bound support
@@ -158,18 +143,4 @@ public class CameraBehavior: MonoBehaviour {
         return status;
     }
     #endregion
-
-	#region multilevel support
-	public void getLevel() {
-		string level = UnityEngine.SceneManagement.SceneManager.GetActiveScene ().name;
-		switch (level) {
-		case "Jump":
-			currentLevel = GameLevel.Level1;
-			break;
-		case "Level2Scene":
-			currentLevel = GameLevel.Level2;
-			break;
-		}
-	}
-	#endregion
 }

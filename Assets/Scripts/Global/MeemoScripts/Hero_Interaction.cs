@@ -65,12 +65,20 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 	#endregion
 
+	#region cheat support
+	public bool is_invincible { get; set; }
+	public bool is_jetpack_man { get; set; }
+	#endregion
+
 	#region sound support
 	public AudioSource[] sounds;
 	#endregion
 
 	// Use this for initialization
 	void Start () {
+		this.is_invincible = false;
+		this.is_jetpack_man = false;
+
 		this.damage_point = Vector3.zero;
 		this.globalBehavior = Camera.main.GetComponent<CameraBehavior>();
 		mSize = GetComponent<Renderer> ().bounds.size;
@@ -114,6 +122,10 @@ public class Hero_Interaction : MonoBehaviour {
 
 	void Update() {
 		// turn off powerup
+		if (this.is_jetpack_man) {
+			this.star_timer = MAX_STAR_TIMER;
+			star_bar.UpdateStarBarSizeInstant (MAX_STAR_TIMER);
+		}
 		is_using_power = false;
 		var em = this.PowerAnimation.emission;
 		em.enabled = false;
@@ -138,7 +150,11 @@ public class Hero_Interaction : MonoBehaviour {
 		case MeemoState.Hurt:
 			damage_point = this.transform.position;
 			damage_particle.transform.position = damage_point;
-			damage_particle.Emit(30);
+			damage_particle.Emit (30);
+			if (this.is_invincible) {// dont get hurt if invincible
+				this.current_state = Hero_Interaction.MeemoState.Normal;
+				return;
+			}
 			if (this.health_bar.curNumOfHearts > 0) {
 				this.health_bar.curNumOfHearts--;
 				sounds [2].Play ();
@@ -201,6 +217,7 @@ public class Hero_Interaction : MonoBehaviour {
 		}
 	}
 	#endregion
+
 
 	#region direction support
 	private void change_direction() {
