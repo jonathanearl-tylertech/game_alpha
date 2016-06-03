@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Angler_interaction : MonoBehaviour {
 
-	public float max_distance_to_travel = 15f;
+	public float max_distance_to_travel = 10f;
 	public float current_distance_traveled = 0f;
 	public float speed;// = 2.5f;
 	private float travel_direction = 1f;
