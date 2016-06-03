@@ -13,7 +13,17 @@ public class StarBar_interaction : MonoBehaviour {
 	private float transition_start;
 	private float y_offset = 0.455f;
 	// Use this for initialization
+
+	#region particle support
+	ParticleSystem ps = null;
+	#endregion
+
 	void Start () {
+		#region particle support
+		ps = this.GetComponentInChildren <ParticleSystem> ();
+		ps.Pause ();
+		#endregion
+
 		UpdateStarBarInCamera ();
 	}
 	
@@ -45,6 +55,8 @@ public class StarBar_interaction : MonoBehaviour {
 			return;
 		this.bar_ratio = ratio;
 		this.transition_start = Time.time;
+
+		ps.Play ();
 	}
 
 	public void UpdateStarBarSizeInstant(float timer_left) {
