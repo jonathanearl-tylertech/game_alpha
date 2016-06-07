@@ -5,19 +5,22 @@ using System;
 public class RespawnManager : MonoBehaviour {
 	public const int MAX_RESPAWN_TIMES = 3;
 	public GameObject[] checkpoints;
-	public int latestCheckPointIndex;
+	public int latestCheckPointIndex = 0;
 	public Hero_Interaction meemo;
 	public Vector3 meemoPosition;
 	public int respawnTime = 0;
-	public Canvas gameOverCanvas;
+	//public Canvas gameOverCanvas;
+	public Canvas gameWinCanvas;
 	public HealthBar_interaction healthBar;
+	public int level;
 
 
 	// Use this for initialization
 	void Start () {
 		checkpoints = GameObject.FindGameObjectsWithTag ("checkPoint");
 		meemo = GameObject.Find ("Meemo").GetComponent<Hero_Interaction> ();
-		gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
+		//gameOverCanvas = GameObject.Find ("GameOverCanvas").GetComponent<Canvas> ();
+		gameWinCanvas = GameObject.Find ("GameWinCanvas").GetComponent<Canvas> ();
 		healthBar = GameObject.Find ("HealthBar").GetComponent<HealthBar_interaction> ();
 	}
 
@@ -30,17 +33,20 @@ public class RespawnManager : MonoBehaviour {
 			UpdateLatestCheckPoint ();
 		}
 		else {
-			//respawn meemo
-			meemo.transform.position = new Vector3(checkpoints[latestCheckPointIndex].transform.position.x, checkpoints[latestCheckPointIndex].transform.position.y + 2f, 0f);
-			//current_state = Normal
-			meemo.current_state = Hero_Interaction.MeemoState.Normal;
-			//refill HealthBar
-			healthBar.curNumOfHearts = 5;
-			//update respawn times
-			respawnTime++;
-			if (respawnTime > MAX_RESPAWN_TIMES) {
-				meemo.Die ();
-				gameOverCanvas.enabled = true;
+			if (!gameWinCanvas.enabled) {
+				//respawn meemo
+				meemo.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 5f, 0f);
+				//current_state = Normal
+				//meemo.current_state = Hero_Interaction.MeemoState.Normal;
+				//take away 1 heart
+				meemo.current_state = Hero_Interaction.MeemoState.Hurt;
+				//update respawn times
+				//respawnTime++;
+
+				//if (respawnTime > MAX_RESPAWN_TIMES) {
+					//meemo.Die ();
+					//gameOverCanvas.enabled = true;
+				//}
 			}
 		}
 	}

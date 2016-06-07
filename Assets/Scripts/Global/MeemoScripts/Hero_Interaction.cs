@@ -287,17 +287,20 @@ public class Hero_Interaction : MonoBehaviour {
 			// TimeScale = 0;
 			// Panel is active
 			Die();
+			//current_state = MeemoState.Hurt;
 		}
+
 		else if (transform.position.y - mSize.y/2f >= globalBehavior.globalyMax)
 		{
 			Die();
+			//current_state = MeemoState.Hurt;
 		}
 	}
 
 	public void Die() {
 		this.current_state = MeemoState.Dead;
 		this.transform.position = new Vector3 (-100f, -100f, -100f);
-		//gameOverCanvas.enabled = true;
+		gameOverCanvas.enabled = true;
 
 	}
 	#endregion
