@@ -11,7 +11,7 @@ public class JellyFish_interaction : MonoBehaviour {
 	public float float_radius_max = 0.5f;
 	public float float_radius_min = 0.3f;
 	public float float_radius;
-	private const float GRAVITY_MULTIPLIER = 20f;
+	private const float GRAVITY_MULTIPLIER = 25f;
 	private float gravity_strength;
 	#endregion
 
