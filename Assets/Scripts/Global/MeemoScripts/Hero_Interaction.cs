@@ -297,7 +297,8 @@ public class Hero_Interaction : MonoBehaviour {
 	public void Die() {
 		this.current_state = MeemoState.Dead;
 		this.transform.position = new Vector3 (-100f, -100f, -100f);
-		gameOverCanvas.enabled = true;
+		//gameOverCanvas.enabled = true;
+
 	}
 	#endregion
 

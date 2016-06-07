@@ -8,6 +8,7 @@ public class Angler_interaction : MonoBehaviour {
 	public float speed;// = 2.5f;
 	private float travel_direction = 1f;
 	private float distFromMeemoToActivateTrigger = 5f;
+	public Vector3 initPos;
 
 	#region state support
 	public enum AnglarState
@@ -27,6 +28,7 @@ public class Angler_interaction : MonoBehaviour {
 	void Start () {
 		speed = 0f;
 		currentState = AnglarState.Stationary;
+		initPos = this.transform.position;
 	}
 
 
