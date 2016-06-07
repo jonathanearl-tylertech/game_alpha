@@ -21,7 +21,8 @@ public class LoadSceneSupport : MonoBehaviour {
         // add in listener
         mStart.onClick.AddListener(
                 () => {                     // Lamda operator: define an annoymous function
-                LoadScene("Jump");
+					Time.timeScale = 1;
+                	LoadScene("Jump");
                 });
         mExit.onClick.AddListener(
                 () => {                     // Lamda operator: define an annoymous function
@@ -33,6 +34,7 @@ public class LoadSceneSupport : MonoBehaviour {
                 });
 		mTutorial.onClick.AddListener (
 				() => {
+					Time.timeScale = 1;
 					LoadScene ("TutorialScene");
 				});
 
