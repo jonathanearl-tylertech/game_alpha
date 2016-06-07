@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Hero_Interaction : MonoBehaviour {
 	private Canvas gameOverCanvas;
+	private Canvas gameWinCanvas;
 	CameraBehavior globalBehavior;
 
 	public float air_speed = 0.1f;
@@ -61,7 +62,8 @@ public class Hero_Interaction : MonoBehaviour {
 		Bubble,
 		Hurt,
 		Invincible,
-		Dead
+		Dead,
+		Respawn
 	}
 	#endregion
 
@@ -72,6 +74,11 @@ public class Hero_Interaction : MonoBehaviour {
 
 	#region sound support
 	public AudioSource[] sounds;
+	#endregion
+
+	#region respawn support
+	public GameObject[] checkpoints;
+	public int latestCheckPointIndex = 0;
 	#endregion
 
 	// Use this for initialization
@@ -101,6 +108,10 @@ public class Hero_Interaction : MonoBehaviour {
 		sounds = GetComponentsInChildren <AudioSource>();
 		#endregion
 
+		#region respawn support
+		checkpoints = GameObject.FindGameObjectsWithTag ("checkPoint");
+		gameWinCanvas = GameObject.Find ("GameWinCanvas").GetComponent<Canvas> ();
+		#endregion
 	}
 
 	void FixedUpdate () {
@@ -133,6 +144,8 @@ public class Hero_Interaction : MonoBehaviour {
 		this.grounded = Physics2D.OverlapCircle (this.ground_check.position, this.ground_radius, this.what_is_ground);
 		this.move_speed = 0f;
 
+		UpdateLatestCheckPoint ();
+
 		switch (this.current_state) {
 		case MeemoState.Bubble:
 			if (Input.GetAxis ("Horizontal") != 0f) { // When meemo is controlling the horizontal direction
@@ -150,7 +163,7 @@ public class Hero_Interaction : MonoBehaviour {
 		case MeemoState.Hurt:
 			damage_point = this.transform.position;
 			damage_particle.transform.position = damage_point;
-			damage_particle.Emit (30);
+			//damage_particle.Emit (30);
 			if (this.is_invincible) {// dont get hurt if invincible
 				this.current_state = Hero_Interaction.MeemoState.Normal;
 				return;
@@ -158,9 +171,12 @@ public class Hero_Interaction : MonoBehaviour {
 			if (this.health_bar.curNumOfHearts > 0) {
 				this.health_bar.curNumOfHearts--;
 				sounds [2].Play ();
+				damage_particle.Emit (30);
 			}
-			if (this.health_bar.curNumOfHearts == 0)
+			if (this.health_bar.curNumOfHearts == 0) {
 				this.Die ();
+				//gameOverCanvas.enabled = true;
+			}
 			else
 				this.current_state = MeemoState.Invincible;
 			break;
@@ -184,6 +200,14 @@ public class Hero_Interaction : MonoBehaviour {
 				this.hurt_timer = 0f;
 				color.a = 1f;
 				renderer.material.color = color;
+			}
+			break;
+		case MeemoState.Respawn:
+			if (!gameWinCanvas.enabled || !gameOverCanvas.enabled) {
+				//current_state = Hero_Interaction.MeemoState.Hurt;
+				this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 5f, 0f);
+				this.health_bar.curNumOfHearts--;
+				current_state = MeemoState.Normal;
 			}
 			break;
 		}
@@ -283,17 +307,18 @@ public class Hero_Interaction : MonoBehaviour {
 		// check if meemo has passed the world bound 
 		if (transform.position.y - mSize.y/2f <= globalBehavior.globalyMin)
 		{
-			// Destroy Meemo
-			// TimeScale = 0;
-			// Panel is active
-			Die();
-			//current_state = MeemoState.Hurt;
+			if (this.health_bar.curNumOfHearts > 1)
+				current_state = MeemoState.Respawn;
+			else
+				current_state = MeemoState.Hurt;
 		}
 
 		else if (transform.position.y - mSize.y/2f >= globalBehavior.globalyMax)
 		{
-			Die();
-			//current_state = MeemoState.Hurt;
+			if (this.health_bar.curNumOfHearts > 1)
+				current_state = MeemoState.Respawn;
+			else
+				current_state = MeemoState.Hurt;
 		}
 	}
 
@@ -331,5 +356,21 @@ public class Hero_Interaction : MonoBehaviour {
 		}
 	}
 	#endregion
+
+	void UpdateLatestCheckPoint() {
+		//meemoPosition = meemo.transform.position;
+		Vector3 checkpointPos;
+		float minDist = 1000f;
+
+		for (int i = 0; i < checkpoints.Length; i++) {
+			checkpointPos = checkpoints [i].transform.position;
+			if (Vector3.Distance (checkpointPos, this.transform.position) < minDist) {
+				minDist = Vector3.Distance (checkpointPos, this.transform.position);
+				if (checkpointPos.x < this.transform.position.x) {
+					latestCheckPointIndex = i;
+				}
+			}
+		}
+	}
 
 }
