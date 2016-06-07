@@ -1,11 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 9b4b3a3235335495fad8c7e89c4910ad
-timeCreated: 1465274485
-=======
-guid: 42d792420871736418a84781223e4342
-timeCreated: 1465274304
->>>>>>> origin/meemo_beta
+guid: 3a3db38a7654c479aa13a5777a710a1f
+timeCreated: 1465321718
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -35,11 +30,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-<<<<<<< HEAD
     aniso: -1
-=======
-    aniso: 16
->>>>>>> origin/meemo_beta
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
