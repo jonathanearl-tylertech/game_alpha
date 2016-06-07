@@ -177,7 +177,7 @@ public class Hero_Interaction : MonoBehaviour {
 				damage_particle.Emit (30);
 			}
 			if (this.health_bar.curNumOfHearts == 0) {
-				this.Die ();
+				current_state = MeemoState.Respawn;
 				//gameOverCanvas.enabled = true;
 			}
 			else
@@ -207,9 +207,8 @@ public class Hero_Interaction : MonoBehaviour {
 			break;
 		case MeemoState.Respawn:
 			if (!gameWinCanvas.enabled || !gameOverCanvas.enabled) {
-				//current_state = Hero_Interaction.MeemoState.Hurt;
 				this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 5f, 0f);
-				this.health_bar.curNumOfHearts--;
+				this.health_bar.curNumOfHearts = 5;
 				current_state = MeemoState.Normal;
 			}
 			break;
@@ -310,18 +309,20 @@ public class Hero_Interaction : MonoBehaviour {
 		// check if meemo has passed the world bound 
 		if (transform.position.y - mSize.y/2f <= globalBehavior.globalyMin)
 		{
-			if (this.health_bar.curNumOfHearts > 1)
-				current_state = MeemoState.Respawn;
-			else
-				current_state = MeemoState.Hurt;
+
+			current_state = MeemoState.Respawn;
+			
 		}
 
 		else if (transform.position.y - mSize.y/2f >= globalBehavior.globalyMax)
 		{
+			/*
 			if (this.health_bar.curNumOfHearts > 1)
 				current_state = MeemoState.Respawn;
 			else
 				current_state = MeemoState.Hurt;
+				*/
+			current_state = MeemoState.Respawn;
 		}
 	}
 
@@ -373,21 +374,22 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 
 	void UpdateLatestCheckPoint() {
+		Vector3 meemoPos = this.transform.position;
 		Vector3 checkpointPos;
 		float minDist = 1000f;
 
 		for (int i = 0; i < checkpoints.Length; i++) {
 			checkpointPos = checkpoints [i].transform.position;
-			if (Vector3.Distance (checkpointPos, this.transform.position) < minDist) {
-				minDist = Vector3.Distance (checkpointPos, this.transform.position);
+			if (Vector3.Distance (checkpointPos, meemoPos) < minDist) {
+				minDist = Vector3.Distance (checkpointPos, meemoPos);
 				switch (level) {
 				case 1:
-					if (checkpointPos.x < this.transform.position.x) {
+					if (checkpointPos.x < meemoPos.x) {
 						latestCheckPointIndex = i;
 					}
 					break;
 				case 2:
-					if (checkpointPos.y < this.transform.position.y) {
+					if (checkpointPos.y < meemoPos.y) {
 						latestCheckPointIndex = i;
 					}
 					break;
