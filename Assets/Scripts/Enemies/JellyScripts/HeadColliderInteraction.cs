@@ -27,7 +27,9 @@ public class HeadColliderInteraction : MonoBehaviour {
 			int direction;
 			if (other.gameObject.transform.position.y > this.transform.position.y) direction = 1;
 			else direction = -1;
-			hero_rigid.AddForce(new Vector3(hero_rigid.velocity.x, direction * bounce_force, 0), ForceMode2D.Impulse);
+			hero_rigid.AddForce(new Vector3(hero_rigid.velocity.x, direction * bounce_force, 0f), ForceMode2D.Impulse);
+			GetComponentInParent<JellyFish_interaction> ().rigid_body.AddForce 
+				(new Vector3 (0f, -direction * bounce_force, 0f), ForceMode2D.Impulse);
 		}
 	}
 }
