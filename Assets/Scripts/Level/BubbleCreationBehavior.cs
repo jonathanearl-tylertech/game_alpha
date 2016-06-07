@@ -6,7 +6,7 @@ public class BubbleCreationBehavior : MonoBehaviour {
 	// For bubble creation
 	public GameObject bubble = null;
 	private float preBubbleTime = -2f;
-	private const float bubbleCreateInterval = 5.0f; // in seconds
+	private float bubbleCreateInterval = 5.0f; // in seconds
 	private CameraBehavior globalBehaviour;
 
 
