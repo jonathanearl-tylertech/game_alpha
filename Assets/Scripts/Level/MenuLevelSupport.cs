@@ -31,7 +31,9 @@ public class MenuLevelSupport : MonoBehaviour {
                 else if (SceneManager.GetActiveScene().name == "TutorialScene")
                     LoadScene("Jump");
                 else if (SceneManager.GetActiveScene().name == "Level2Scene")
-                    Application.Quit();
+					LoadScene("Level3Scene");
+				else if (SceneManager.GetActiveScene().name == "Level3Scene")
+					Application.Quit();
 			});
     }
 		
