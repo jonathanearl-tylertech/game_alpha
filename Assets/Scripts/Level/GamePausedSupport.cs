@@ -37,8 +37,11 @@ public class GamePausedSupport : MonoBehaviour
     void Update()
     {
         Canvas gameOverCanvas = GameObject.Find("GameOverCanvas").GetComponent<Canvas>();
-        if (!gameOverCanvas.enabled)
+        Canvas gameWinCanvas = GameObject.Find("GameWinCanvas").GetComponent<Canvas>();
+        Debug.Log(!gameOverCanvas.enabled + " or " + !gameWinCanvas.enabled);
+        if (!gameOverCanvas.enabled && !gameWinCanvas.enabled)
         {
+            //Debug.Log(gameOverCanvas.enabled + " or " + gameWinCanvas.enabled);
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 escPressed = !escPressed;

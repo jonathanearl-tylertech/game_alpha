@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MenuLevelSupport : MonoBehaviour {
 
-	public string LevelName = null;
+	//public string LevelName = null;
 
 	public Button mMenu;
 	public Button mRestart;
@@ -28,6 +28,8 @@ public class MenuLevelSupport : MonoBehaviour {
 			() => {                     // Lamda operator: define an annoymous function
                 if (SceneManager.GetActiveScene().name == "Jump")
                     LoadScene("Level2Scene");
+                else if (SceneManager.GetActiveScene().name == "TutorialScene")
+                    LoadScene("Jump");
                 else if (SceneManager.GetActiveScene().name == "Level2Scene")
                     Application.Quit();
 			});
