@@ -177,6 +177,7 @@ public class Hero_Interaction : MonoBehaviour {
 				damage_particle.Emit (30);
 			}
 			if (this.health_bar.curNumOfHearts == 0) {
+				Die ();
 				gameOverCanvas.enabled = true;
 			}
 			else
