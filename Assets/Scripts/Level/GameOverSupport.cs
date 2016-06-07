@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-// for SceneManager
 
-public class MenuLevelSupport : MonoBehaviour {
+public class GameOverSupport : MonoBehaviour {
 
-	//public string LevelName = null;
-
+	// Use this for initialization
 	public Button mMenu;
 	public Button mRestart;
-	public Button mNextLevel;
+	public Button mRespawn;
 
 	// Use this for initialization
 	void Start () {
@@ -24,22 +22,16 @@ public class MenuLevelSupport : MonoBehaviour {
 			() => {                     // Lamda operator: define an annoymous function
 				LoadScene("Menu");
 			});
-        mNextLevel.onClick.AddListener(
+		mRespawn.onClick.AddListener(
 			() => {                     // Lamda operator: define an annoymous function
-                if (SceneManager.GetActiveScene().name == "Jump")
-                    LoadScene("Level2Scene");
-                else if (SceneManager.GetActiveScene().name == "TutorialScene")
-                    LoadScene("Jump");
-                else if (SceneManager.GetActiveScene().name == "Level2Scene")
-					LoadScene("Level3Scene");
-				else if (SceneManager.GetActiveScene().name == "Level3Scene")
-					Application.Quit();
+				Hero_Interaction meemo = GameObject.Find("Meemo").GetComponent<Hero_Interaction>();
+				meemo.current_state = Hero_Interaction.MeemoState.Respawn;
 			});
-    }
-		
+	}
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	void LoadScene(string theLevel) {

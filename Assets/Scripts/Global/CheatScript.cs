@@ -9,6 +9,8 @@ public class CheatScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown ("0"))
+			SceneManager.LoadScene ("TutorialScene");
 		if (Input.GetKeyDown ("1"))
 			SceneManager.LoadScene ("Jump");
 		if (Input.GetKeyDown ("2"))

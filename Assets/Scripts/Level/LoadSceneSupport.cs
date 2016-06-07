@@ -10,6 +10,7 @@ public class LoadSceneSupport : MonoBehaviour {
     public Button mStart;
     public Button mExit;
     public Button mCredit;
+	public Button mTutorial;
     public Canvas creditCanvas;
 
 	// Use this for initialization
@@ -30,6 +31,10 @@ public class LoadSceneSupport : MonoBehaviour {
                 () => {                     // Lamda operator: define an annoymous function
                     creditCanvas.enabled = true;
                 });
+		mTutorial.onClick.AddListener (
+				() => {
+					LoadScene ("TutorialScene");
+				});
 
     }
 
