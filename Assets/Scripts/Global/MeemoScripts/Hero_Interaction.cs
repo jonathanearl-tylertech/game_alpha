@@ -177,8 +177,7 @@ public class Hero_Interaction : MonoBehaviour {
 				damage_particle.Emit (30);
 			}
 			if (this.health_bar.curNumOfHearts == 0) {
-				current_state = MeemoState.Respawn;
-				//gameOverCanvas.enabled = true;
+				gameOverCanvas.enabled = true;
 			}
 			else
 				this.current_state = MeemoState.Invincible;
