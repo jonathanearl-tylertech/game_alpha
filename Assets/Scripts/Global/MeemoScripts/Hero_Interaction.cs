@@ -177,8 +177,7 @@ public class Hero_Interaction : MonoBehaviour {
 				damage_particle.Emit (30);
 			}
 			if (this.health_bar.curNumOfHearts == 0) {
-				current_state = MeemoState.Respawn;
-				//gameOverCanvas.enabled = true;
+				gameOverCanvas.enabled = true;
 			}
 			else
 				this.current_state = MeemoState.Invincible;
@@ -207,7 +206,8 @@ public class Hero_Interaction : MonoBehaviour {
 			break;
 		case MeemoState.Respawn:
 			if (!gameWinCanvas.enabled || !gameOverCanvas.enabled) {
-				this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 5f, 0f);
+				gameOverCanvas.enabled = false;
+				this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 10f, 0f);
 				this.health_bar.curNumOfHearts = 5;
 				current_state = MeemoState.Normal;
 			}
@@ -309,27 +309,22 @@ public class Hero_Interaction : MonoBehaviour {
 		// check if meemo has passed the world bound 
 		if (transform.position.y - mSize.y/2f <= globalBehavior.globalyMin)
 		{
-
-			current_state = MeemoState.Respawn;
+			gameOverCanvas.enabled = true;
+			Die ();
 			
 		}
 
 		else if (transform.position.y - mSize.y/2f >= globalBehavior.globalyMax)
 		{
-			/*
-			if (this.health_bar.curNumOfHearts > 1)
-				current_state = MeemoState.Respawn;
-			else
-				current_state = MeemoState.Hurt;
-				*/
-			current_state = MeemoState.Respawn;
+			gameOverCanvas.enabled = true;
+			Die ();
 		}
 	}
 
 	public void Die() {
 		this.current_state = MeemoState.Dead;
 		this.transform.position = new Vector3 (-100f, -100f, -100f);
-		gameOverCanvas.enabled = true;
+		//gameOverCanvas.enabled = true;
 
 	}
 	#endregion
