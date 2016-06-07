@@ -19,12 +19,14 @@ public class SquidBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float currentY = transform.position.y; 
+		float currentY = transform.position.y;
+
 		if (currentY > maxY) {
 			isMovingUp = false;
 		} else if (currentY < minY) {
 			isMovingUp = true;
 		}
+
 		if (isMovingUp) {
 			MoveUp ();
 		} else {
