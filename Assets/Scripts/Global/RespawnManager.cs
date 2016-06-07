@@ -13,24 +13,30 @@ public class RespawnManager : MonoBehaviour {
 	void Start () {
 		checkpoints = GameObject.FindGameObjectsWithTag ("checkPoint");
 		meemo = GameObject.Find ("Meemo").GetComponent<Hero_Interaction> ();
-		for (int i = 0; i < checkpoints.Length; i++) {
-			Debug.Log ("checkpoint" + i + " " + checkpoints[i].transform.position.ToString());
-		}
+
 	}
 
 
 	// Update is called once per frame
 	void Update () {
 		meemoPosition = meemo.transform.position;
-		UpdateLatestCheckPoint ();
+
+		if (meemo.current_state != Hero_Interaction.MeemoState.Dead) {
+			UpdateLatestCheckPoint ();
+		}
+			
 		if (meemo.current_state == Hero_Interaction.MeemoState.Dead) {
-			//meemo.transform.position
+			//respawn meemo
+			//current_state = Normal
 		}
 	}
 
 
 	void UpdateLatestCheckPoint() {
-		
-	}
+		meemoPosition = meemo.transform.position;
+		for (int i = 0; i < checkpoints.Length; i++) {
+			Debug.Log ("checkpoint" + i + " " + checkpoints[i].transform.position.ToString());
 
+		}
+	}
 }
