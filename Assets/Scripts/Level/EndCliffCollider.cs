@@ -3,11 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class EndCliffCollider : MonoBehaviour {
-    public GameObject winningPanel = null;
+    private Canvas gameWinCanvas;
     // Use this for initialization
     void Start()
     {
-		winningPanel.SetActive (false);
+        gameWinCanvas = GameObject.Find("GameWinCanvas").GetComponent<Canvas>();
+        gameWinCanvas.enabled = false;
     }
 
     // Update is called once per frame
@@ -22,7 +23,7 @@ public class EndCliffCollider : MonoBehaviour {
         {
 			other.gameObject.GetComponent<Hero_Interaction> ().current_state = Hero_Interaction.MeemoState.Dead;
             // Code to handle electricity and bouncing out
-            winningPanel.SetActive(true);
+            gameWinCanvas.enabled = true;
         }
     }
 }
