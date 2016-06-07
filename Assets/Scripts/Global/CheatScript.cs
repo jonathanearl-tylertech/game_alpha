@@ -15,6 +15,8 @@ public class CheatScript : MonoBehaviour {
 			SceneManager.LoadScene ("Jump");
 		if (Input.GetKeyDown ("2"))
 			SceneManager.LoadScene ("Level2Scene");
+		if (Input.GetKeyDown ("3"))
+			SceneManager.LoadScene ("Level3Scene");
 		if (Input.GetKeyDown ("j")) {
 			Hero_Interaction h_i = GameObject.Find ("Meemo").GetComponent<Hero_Interaction> ();
 			h_i.is_jetpack_man = !h_i.is_jetpack_man;

@@ -103,8 +103,7 @@ public class Hero_Interaction : MonoBehaviour {
 		var em = this.PowerAnimation.emission; // kinda hacky
 		em.enabled = false;
 		gameOverCanvas.enabled = false;		// The GameOverCanvas has to be initially enabled on the Unity UI
-		//gameOverCanvasObject.SetActive(false);
-		//gameOverCanvasObject.SetActive(true);
+
 
 		current_state = MeemoState.Normal;
 		#region movespeed support
@@ -183,8 +182,7 @@ public class Hero_Interaction : MonoBehaviour {
 			}
 			if (this.health_bar.curNumOfHearts == 0) {
 				Die ();
-				//gameOverCanvasObject.SetActive(true);
-				//gameOverCanvas.enabled = true;
+				gameOverCanvas.enabled = true;
 			}
 			else
 				this.current_state = MeemoState.Invincible;
@@ -216,12 +214,13 @@ public class Hero_Interaction : MonoBehaviour {
 			if (gameOverCanvas.enabled) {
 				Debug.Log ("Respawn is called!!!");
 				gameOverCanvas.enabled = false;
-				gameOverCanvasObject.SetActive(false);
-				gameOverCanvasObject.SetActive(true);
-
+				this.rigid_body.velocity = new Vector2(this.rigid_body.velocity.x, 0f);
 				this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 10f, 0f);
 				this.health_bar.curNumOfHearts = 5;
 				current_state = MeemoState.Normal;
+
+				GameObject eventSystem = GameObject.Find ("EventSystem");
+				eventSystem.GetComponent<UnityEngine.EventSystems.EventSystem> ().SetSelectedGameObject (null);
 			}
 			break;
 		}
@@ -321,16 +320,14 @@ public class Hero_Interaction : MonoBehaviour {
 		// check if meemo has passed the world bound 
 		if (transform.position.y - mSize.y/2f <= globalBehavior.globalyMin)
 		{
-			//gameOverCanvasObject.SetActive(true);
-			//gameOverCanvas.enabled = true;
+			gameOverCanvas.enabled = true;
 			Die ();
 			
 		}
 
 		else if (transform.position.y - mSize.y/2f >= globalBehavior.globalyMax)
 		{
-			//gameOverCanvasObject.SetActive(true);
-			//gameOverCanvas.enabled = true;
+			gameOverCanvas.enabled = true;
 			Die ();
 		}
 	}
@@ -338,7 +335,7 @@ public class Hero_Interaction : MonoBehaviour {
 	public void Die() {
 		this.current_state = MeemoState.Dead;
 		this.transform.position = new Vector3 (-100f, -100f, -100f);
-		gameOverCanvas.enabled = true;
+		//gameOverCanvas.enabled = true;
 
 	}
 	#endregion
@@ -378,6 +375,9 @@ public class Hero_Interaction : MonoBehaviour {
 		case "Level2Scene":
 			level = 2;
 			break;
+		case "Level3Scene":
+			level = 3;
+			break;
 		}
 		
 	}
@@ -399,6 +399,11 @@ public class Hero_Interaction : MonoBehaviour {
 					break;
 				case 2:
 					if (checkpointPos.y < meemoPos.y) {
+						latestCheckPointIndex = i;
+					}
+					break;
+				case 3:
+					if (checkpointPos.x < meemoPos.x) {
 						latestCheckPointIndex = i;
 					}
 					break;
