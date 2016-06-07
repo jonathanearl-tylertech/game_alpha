@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Hero_Interaction : MonoBehaviour {
 	private Canvas gameOverCanvas;
@@ -79,6 +80,7 @@ public class Hero_Interaction : MonoBehaviour {
 	#region respawn support
 	public GameObject[] checkpoints;
 	public int latestCheckPointIndex = 0;
+	public int level;
 	#endregion
 
 	// Use this for initialization
@@ -109,6 +111,7 @@ public class Hero_Interaction : MonoBehaviour {
 		#endregion
 
 		#region respawn support
+		getScene();
 		checkpoints = GameObject.FindGameObjectsWithTag ("checkPoint");
 		gameWinCanvas = GameObject.Find ("GameWinCanvas").GetComponent<Canvas> ();
 		#endregion
@@ -357,8 +360,19 @@ public class Hero_Interaction : MonoBehaviour {
 	}
 	#endregion
 
+	void getScene() {
+		switch (SceneManager.GetActiveScene().name) {
+		case "Jump":
+			level = 1;
+			break;
+		case "Level2Scene":
+			level = 2;
+			break;
+		}
+		
+	}
+
 	void UpdateLatestCheckPoint() {
-		//meemoPosition = meemo.transform.position;
 		Vector3 checkpointPos;
 		float minDist = 1000f;
 
@@ -366,8 +380,17 @@ public class Hero_Interaction : MonoBehaviour {
 			checkpointPos = checkpoints [i].transform.position;
 			if (Vector3.Distance (checkpointPos, this.transform.position) < minDist) {
 				minDist = Vector3.Distance (checkpointPos, this.transform.position);
-				if (checkpointPos.x < this.transform.position.x) {
-					latestCheckPointIndex = i;
+				switch (level) {
+				case 1:
+					if (checkpointPos.x < this.transform.position.x) {
+						latestCheckPointIndex = i;
+					}
+					break;
+				case 2:
+					if (checkpointPos.y < this.transform.position.y) {
+						latestCheckPointIndex = i;
+					}
+					break;
 				}
 			}
 		}
