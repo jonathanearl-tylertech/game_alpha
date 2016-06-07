@@ -206,12 +206,13 @@ public class Hero_Interaction : MonoBehaviour {
 			}
 			break;
 		case MeemoState.Respawn:
-			if (!gameWinCanvas.enabled || !gameOverCanvas.enabled) {
-				gameOverCanvas.enabled = false;
-				this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 10f, 0f);
-				this.health_bar.curNumOfHearts = 5;
-				current_state = MeemoState.Normal;
-			}
+			Debug.Log ("Respawn is called!!!");
+			gameOverCanvas.enabled = false;
+
+			this.transform.position = new Vector3 (checkpoints [latestCheckPointIndex].transform.position.x, checkpoints [latestCheckPointIndex].transform.position.y + 10f, 0f);
+			this.health_bar.curNumOfHearts = 5;
+			current_state = MeemoState.Normal;
+
 			break;
 		}
 		// make sure damage particles stay in correct position

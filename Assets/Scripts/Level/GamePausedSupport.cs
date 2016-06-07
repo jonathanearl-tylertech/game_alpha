@@ -9,6 +9,7 @@ public class GamePausedSupport : MonoBehaviour
     public Button mResume;
     public Button mRestart;
     public Button mExit;
+	public Button mMenu;
 
     // Use this for initialization
     void Start()
@@ -31,6 +32,10 @@ public class GamePausedSupport : MonoBehaviour
             () => {                     // Lamda operator: define an annoymous function
                 Application.Quit();
             });
+		mMenu.onClick.AddListener(
+			() => {                     // Lamda operator: define an annoymous function
+				LoadScene("Menu");
+			});
     }
 
     // Update is called once per frame
